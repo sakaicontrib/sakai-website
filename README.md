@@ -44,7 +44,7 @@ This repository includes GitHub Actions that let non-technical contributors open
    - `LLM_MODEL` (global override)
    - `LLM_MAX_TOKENS` (default: `4000`)
    - `LLM_API_BASE_URL` (only needed for custom OpenRouter-compatible endpoints)
-   - `OPENROUTER_MODEL` (default: `moonshotai/kimi-k2.5`)
+   - `OPENROUTER_MODEL` (default: `minimax/minimax-m2.5`)
    - `OPENROUTER_HTTP_REFERER`
    - `OPENROUTER_X_TITLE`
 3. Optional repo variable `AI_AUTOMERGE_DAYS` (default is `7`).

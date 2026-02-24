@@ -165,7 +165,7 @@ function resolveOpenRouterConfig() {
   const apiKey = requireEnv("OPENROUTER_API_KEY");
   const baseUrl = String(process.env.LLM_API_BASE_URL || "https://openrouter.ai/api/v1").replace(/\/+$/, "");
   const endpoint = String(process.env.LLM_CHAT_COMPLETIONS_PATH || "/chat/completions");
-  const model = process.env.LLM_MODEL || process.env.OPENROUTER_MODEL || "moonshotai/kimi-k2.5";
+  const model = process.env.LLM_MODEL || process.env.OPENROUTER_MODEL || "minimax/minimax-m2.5";
   const maxTokens = Number(process.env.LLM_MAX_TOKENS || 4000);
 
   return {
