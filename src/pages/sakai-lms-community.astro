@@ -45,6 +45,21 @@ const pmcMembers = [
   "Steve Swinsburg, Flying Kite",
   "Joshua Wilson, Flywheel Strategies"
 ];
+
+const communityStories = [
+  {
+    name: "Amy Drees",
+    institution: "Northwestern State Community College"
+  },
+  {
+    name: "Stella Erbes",
+    institution: "Pepperdine University"
+  },
+  {
+    name: "Wilbur Reed",
+    institution: "Johnson University"
+  }
+];
 ---
 
 <SectionPageLayout
@@ -118,5 +133,23 @@ const pmcMembers = [
         </a>
       ))}
     </div>
+  </section>
+
+  <section class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Community Stories</h2>
+    <p class="mt-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+      The legacy Sakai site highlights practitioner stories from institutions using Sakai in real teaching environments.
+    </p>
+    <div class="mt-4 grid gap-3 md:grid-cols-3">
+      {communityStories.map((story) => (
+        <article class="hard-border bg-white p-4">
+          <h3 class="sans text-lg font-black uppercase text-[var(--sakai-ink)]">{story.name}</h3>
+          <p class="mt-2 text-sm text-[var(--sakai-ink-soft)]">{story.institution}</p>
+        </article>
+      ))}
+    </div>
+    <a href="https://www.youtube.com/@SakaiCLE" class="sans mt-4 inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
+      Watch Community Videos
+    </a>
   </section>
 </SectionPageLayout>
