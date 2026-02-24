@@ -16,7 +16,6 @@ const links = [
   { href: "/", label: "Welcome" },
   { href: "/sakai-lms-features", label: "Features" },
   { href: "/resources", label: "Resources" },
-  { href: "/sakai-news", label: "News" },
   { href: "/events", label: "Events" },
   { href: "/releases", label: "Releases" },
   { href: "/connect", label: "Connect" },
@@ -61,11 +60,11 @@ const links = [
     <footer class="border-t-2 border-[var(--sakai-black)] bg-[var(--sakai-paper)]">
       <div class="mx-auto flex w-full max-w-7xl flex-col gap-5 px-4 py-7 md:px-8 lg:flex-row lg:items-center lg:justify-between">
         <a href={withBase("/")} class="flex items-center gap-3">
-          <img src={withBase("/images/sakai-logo-footer-dark.png")} alt="Sakai footer logo" class="h-10 w-auto" />
+          <img src={withBase("/images/sakai-logo.png")} alt="Sakai logo" class="h-10 w-auto" />
           <p class="sans text-xs font-bold uppercase tracking-[0.14em] text-[var(--sakai-ink)]">Community-Led for 20+ Years</p>
         </a>
 
-        <p class="text-sm text-[var(--sakai-ink-soft)]">© {new Date().getFullYear()} Sakai Community</p>
+        <p class="text-sm text-[var(--sakai-ink-soft)]">© {new Date().getFullYear()} Sakai Project</p>
       </div>
     </footer>
   </div>
