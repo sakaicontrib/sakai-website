@@ -1,5 +1,7 @@
 ---
 import SectionPageLayout from "../layouts/SectionPageLayout.astro";
+const withBase = (path: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
 
 const resources = [
   {
@@ -35,13 +37,19 @@ const resources = [
     </p>
   </article>
 
-  <section class="grid gap-4 md:grid-cols-3">
+  <section class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
     {resources.map((resource) => (
       <a href={resource.href} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
         <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">{resource.title}</h2>
         <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">{resource.description}</p>
       </a>
     ))}
+    <a href={withBase("/accessibility/accessibility-strategy")} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+      <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">Accessibility Strategy</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+        Review Sakai's accessibility strategy, conformance reporting approach, and VPAT documentation links.
+      </p>
+    </a>
   </section>
 
   <section class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-6 text-[var(--sakai-paper)]">

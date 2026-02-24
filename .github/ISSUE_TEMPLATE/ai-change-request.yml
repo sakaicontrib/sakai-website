@@ -1,0 +1,56 @@
+name: AI Change Request
+description: Request a website/content change in plain language.
+title: "[AI Request] "
+labels:
+  - ai-change-request
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the change in plain language. The automation will draft a PR from this issue.
+
+        Important:
+        - Include exact text when possible.
+        - Include links, screenshots, and pages to edit.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What should change?
+      description: Explain what is wrong or outdated today.
+      placeholder: The homepage headline still mentions 2024 and should mention 2026 release work.
+    validations:
+      required: true
+
+  - type: textarea
+    id: desired
+    attributes:
+      label: Desired result
+      description: Describe exactly what you want users to see.
+      placeholder: Replace the headline text with ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: pages
+    attributes:
+      label: Which pages or files are affected?
+      description: URLs or file names are both fine.
+      placeholder: /, /resources, src/pages/index.astro
+
+  - type: textarea
+    id: references
+    attributes:
+      label: Reference material
+      description: Links, source content, screenshots, style notes.
+      placeholder: https://www.sakailms.org/... plus any source copy text.
+
+  - type: checkboxes
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      options:
+        - label: I described the change clearly enough for an engineer to verify.
+          required: true
+        - label: I understand a maintainer will review before merge.
+          required: true
