@@ -1,0 +1,61 @@
+---
+import SectionPageLayout from "../layouts/SectionPageLayout.astro";
+
+const products = [
+  {
+    title: "Unisex Hoodie",
+    href: "https://www.sakailms.org/product-page/sakai-unisex-hoodie",
+    image: "https://static.wixstatic.com/media/a0aa54_714c21c9192a4ae5bc55eea82def57ce~mv2.jpg/v1/fit/w_1000,h_1000,q_90/file.jpg"
+  },
+  {
+    title: "11oz Mug With Color Inside",
+    href: "https://www.sakailms.org/product-page/svc25-11oz-mug-with-color-inside",
+    image: "https://static.wixstatic.com/media/b14e39_0ea4c61a48e94e7fb5f519729eef793c~mv2.jpg/v1/fit/w_2000,h_2000,q_90/file.jpg"
+  },
+  {
+    title: "Unisex Classic Tee",
+    href: "https://www.sakailms.org/product-page/svc25-unisex-classic-tee",
+    image: "https://static.wixstatic.com/media/b14e39_32d349f0f571415eb7854b8443f383a9~mv2.jpg/v1/fit/w_2000,h_2000,q_90/file.jpg"
+  },
+  {
+    title: "Embroidered Beanie",
+    href: "https://www.sakailms.org/product-page/sakai-embroidered-beanie",
+    image: "https://static.wixstatic.com/media/a0aa54_3320333e4f8146baa20f9ce159195a66~mv2.jpg/v1/fit/w_2000,h_2000,q_90/file.jpg"
+  },
+  {
+    title: "Stainless Steel Tumbler",
+    href: "https://www.sakailms.org/product-page/sakai-stainless-steel-tumbler-white",
+    image: "https://static.wixstatic.com/media/a0aa54_b38711a348f848a9ab33f2d1633e4578~mv2.jpg/v1/fit/w_2000,h_2000,q_90/file.jpg"
+  },
+  {
+    title: "Flip Flops",
+    href: "https://www.sakailms.org/product-page/sakai-flip-flops-patterned",
+    image: "https://static.wixstatic.com/media/b14e39_f33a46f16a9c4bb6accca3be8c3a5f95~mv2.jpg/v1/fit/w_2000,h_2000,q_90/file.jpg"
+  }
+];
+---
+
+<SectionPageLayout
+  title="Merch | Sakai LMS"
+  description="Sakai community merchandise including apparel and accessories."
+  kicker="Merch"
+  heading="Sakai Community Merch"
+>
+  <article class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+    <p class="text-lg leading-relaxed text-[var(--sakai-ink)]">
+      The legacy Sakai store includes apparel and accessories for community members and conference participants.
+    </p>
+  </article>
+
+  <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {products.map((product) => (
+      <a href={product.href} target="_blank" rel="noreferrer" class="hard-border block-shadow-soft overflow-hidden bg-white transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+        <img src={product.image} alt={product.title} loading="lazy" class="h-56 w-full object-cover" />
+        <div class="p-4">
+          <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">{product.title}</h2>
+          <p class="mt-2 text-xs font-semibold uppercase tracking-[0.1em] text-[var(--sakai-terracotta)]">View Product</p>
+        </div>
+      </a>
+    ))}
+  </section>
+</SectionPageLayout>

@@ -7,36 +7,20 @@ body:
   - type: markdown
     attributes:
       value: |
-        Describe the change in plain language. The automation will draft a PR from this issue.
-
-        Important:
-        - Include exact text when possible.
-        - Include links, screenshots, and pages to edit.
+        Explain the change in plain language. The automation will draft a PR from this issue.
 
   - type: textarea
-    id: problem
+    id: change_request
     attributes:
-      label: What should change?
-      description: Explain what is wrong or outdated today.
-      placeholder: The homepage headline still mentions 2024 and should mention 2026 release work.
+      label: What change do you want?
+      description: Tell us what to update and what the new content/behavior should be.
+      placeholder: |
+        Example:
+        Update the homepage hero headline from "A modern LMS for learning" to "A modern LMS for teaching and learning."
+        Also update the CTA button text from "Try Sakai LMS Free" to "Get a Sakai LMS Demo."
+        Page: /
     validations:
       required: true
-
-  - type: textarea
-    id: desired
-    attributes:
-      label: Desired result
-      description: Describe exactly what you want users to see.
-      placeholder: Replace the headline text with ...
-    validations:
-      required: true
-
-  - type: textarea
-    id: pages
-    attributes:
-      label: Which pages or files are affected?
-      description: URLs or file names are both fine.
-      placeholder: /, /resources, src/pages/index.astro
 
   - type: textarea
     id: references
@@ -44,13 +28,3 @@ body:
       label: Reference material
       description: Links, source content, screenshots, style notes.
       placeholder: https://www.sakailms.org/... plus any source copy text.
-
-  - type: checkboxes
-    id: acceptance
-    attributes:
-      label: Acceptance criteria
-      options:
-        - label: I described the change clearly enough for an engineer to verify.
-          required: true
-        - label: I understand a maintainer will review before merge.
-          required: true
