@@ -166,14 +166,14 @@ function resolveOpenRouterConfig() {
   const baseUrl = String(process.env.LLM_API_BASE_URL || "https://openrouter.ai/api/v1").replace(/\/+$/, "");
   const endpoint = String(process.env.LLM_CHAT_COMPLETIONS_PATH || "/chat/completions");
   const model = process.env.LLM_MODEL || process.env.OPENROUTER_MODEL || "minimax/minimax-m2.5";
-  const maxTokens = Number(process.env.LLM_MAX_TOKENS || 4000);
+  const maxTokens = Number(process.env.LLM_MAX_TOKENS || 8000);
 
   return {
     apiKey,
     baseUrl,
     endpoint: endpoint.startsWith("/") ? endpoint : `/${endpoint}`,
     model,
-    maxTokens: Number.isFinite(maxTokens) && maxTokens > 0 ? Math.floor(maxTokens) : 4000,
+    maxTokens: Number.isFinite(maxTokens) && maxTokens > 0 ? Math.floor(maxTokens) : 8000,
   };
 }
 
@@ -192,40 +192,48 @@ function buildOpenRouterHeaders() {
 
 async function llmCompletion({ providerConfig, systemPrompt, userPrompt }) {
   const { apiKey, model, baseUrl, endpoint, maxTokens } = providerConfig;
-  const res = await fetch(`${baseUrl}${endpoint}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-      ...buildOpenRouterHeaders(),
-    },
-    body: JSON.stringify({
-      model,
-      temperature: 0.2,
-      max_tokens: maxTokens,
-      include_reasoning: false,
-      reasoning: {
-        effort: "none",
-        exclude: true,
+  let effectivePrompt = userPrompt;
+  let lastPayload = null;
+
+  for (let attempt = 1; attempt <= 2; attempt += 1) {
+    const res = await fetch(`${baseUrl}${endpoint}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+        ...buildOpenRouterHeaders(),
       },
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: userPrompt },
-      ],
-    }),
-  });
+      body: JSON.stringify({
+        model,
+        temperature: 0.2,
+        max_tokens: maxTokens,
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: effectivePrompt },
+        ],
+      }),
+    });
 
-  const payload = await res.json();
-  if (!res.ok) {
-    throw new Error(`LLM API ${res.status}: ${JSON.stringify(payload)}`);
+    const payload = await res.json();
+    lastPayload = payload;
+    if (!res.ok) {
+      throw new Error(`LLM API ${res.status}: ${JSON.stringify(payload)}`);
+    }
+
+    const content = extractMessageContent(payload);
+    if (content) {
+      return parseJsonLoose(content);
+    }
+
+    effectivePrompt = [
+      userPrompt,
+      "",
+      "Your previous response had empty message.content.",
+      "Return ONLY the final JSON object now, no reasoning and no explanation.",
+    ].join("\n");
   }
 
-  const content = extractMessageContent(payload);
-  if (!content) {
-    throw new Error(`LLM API returned no content: ${JSON.stringify(payload).slice(0, 1000)}`);
-  }
-
-  return parseJsonLoose(content);
+  throw new Error(`LLM API returned no content: ${JSON.stringify(lastPayload).slice(0, 1000)}`);
 }
 
 async function main() {

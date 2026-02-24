@@ -42,7 +42,7 @@ This repository includes GitHub Actions that let non-technical contributors open
 1. Add repo secret `OPENROUTER_API_KEY`.
 2. Optional OpenRouter variables:
    - `LLM_MODEL` (global override)
-   - `LLM_MAX_TOKENS` (default: `4000`)
+   - `LLM_MAX_TOKENS` (default: `8000`)
    - `LLM_API_BASE_URL` (only needed for custom OpenRouter-compatible endpoints)
    - `OPENROUTER_MODEL` (default: `minimax/minimax-m2.5`)
    - `OPENROUTER_HTTP_REFERER`
