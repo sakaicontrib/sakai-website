@@ -127,12 +127,14 @@ function resolveOpenRouterConfig() {
   const baseUrl = String(process.env.LLM_API_BASE_URL || "https://openrouter.ai/api/v1").replace(/\/+$/, "");
   const endpoint = String(process.env.LLM_CHAT_COMPLETIONS_PATH || "/chat/completions");
   const model = process.env.LLM_MODEL || process.env.OPENROUTER_MODEL || "moonshotai/kimi-k2.5";
+  const maxTokens = Number(process.env.LLM_MAX_TOKENS || 4000);
 
   return {
     apiKey,
     baseUrl,
     endpoint: endpoint.startsWith("/") ? endpoint : `/${endpoint}`,
     model,
+    maxTokens: Number.isFinite(maxTokens) && maxTokens > 0 ? Math.floor(maxTokens) : 4000,
   };
 }
 
@@ -150,7 +152,7 @@ function buildOpenRouterHeaders() {
 }
 
 async function llmCompletion({ providerConfig, systemPrompt, userPrompt }) {
-  const { apiKey, model, baseUrl, endpoint } = providerConfig;
+  const { apiKey, model, baseUrl, endpoint, maxTokens } = providerConfig;
   const res = await fetch(`${baseUrl}${endpoint}`, {
     method: "POST",
     headers: {
@@ -161,6 +163,7 @@ async function llmCompletion({ providerConfig, systemPrompt, userPrompt }) {
     body: JSON.stringify({
       model,
       temperature: 0.2,
+      max_tokens: maxTokens,
       response_format: { type: "json_object" },
       messages: [
         { role: "system", content: systemPrompt },
