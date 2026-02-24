@@ -1,5 +1,6 @@
 ---
 import SectionPageLayout from "../layouts/SectionPageLayout.astro";
+import { sakaiVirtualConferences } from "../data/sakaiConRecordings";
 const withBase = (path: string) =>
   `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
 
@@ -9,51 +10,6 @@ const formatDate = (value: string) =>
     month: "short",
     day: "numeric"
   });
-
-const sakaiCon2023 = [
-  {
-    title: "SakaiCon23 Welcome and Sakai 23 Highlights",
-    date: "2023-08-21T21:29:26.366Z",
-    duration: "20:33",
-    href: "https://www.youtube.com/watch?v=dXEi5gpWoNk"
-  },
-  {
-    title: "The Plan Unidigital: Sakai Innovations from Spanish Universities",
-    date: "2023-08-21T21:29:26.366Z",
-    duration: "32:09",
-    href: "https://www.youtube.com/watch?v=2u7S2Px0IIs"
-  },
-  {
-    title: "Sakai Great Teaching Showcase",
-    date: "2023-08-21T21:29:26.365Z",
-    duration: "56:07",
-    href: "https://www.youtube.com/watch?v=PEu1DPLOPi4"
-  },
-  {
-    title: "Sakai Lessons: Julianne's 7 Favorite Things",
-    date: "2023-08-21T21:29:26.364Z",
-    duration: "30:13",
-    href: "https://www.youtube.com/watch?v=lVKwn4Wxer8"
-  },
-  {
-    title: "Found in Translation: Empowering Multilingualism in Sakai",
-    date: "2023-08-21T21:29:26.364Z",
-    duration: "32:51",
-    href: "https://www.youtube.com/watch?v=SJs1zp2ZNks"
-  },
-  {
-    title: "Creative Approaches to Assessment in Sakai",
-    date: "2023-08-21T21:29:26.363Z",
-    duration: "33:07",
-    href: "https://www.youtube.com/watch?v=upe_M47P4XU"
-  },
-  {
-    title: "Group Awareness and Collaboration in Sakai",
-    date: "2023-08-21T21:29:26.362Z",
-    duration: "32:33",
-    href: "https://www.youtube.com/watch?v=izx3ykZpP2w"
-  }
-];
 ---
 
 <SectionPageLayout
@@ -68,18 +24,54 @@ const sakaiCon2023 = [
     </p>
   </article>
 
-  <section class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-6 text-[var(--sakai-paper)]">
-    <h2 class="sans text-2xl font-black uppercase">SakaiCon 2023 Sessions</h2>
-    <p class="mt-2 text-sm text-[var(--sakai-paper)]/85">Highlights and session recordings from the SakaiCon 2023 lineup.</p>
-    <div class="mt-4 grid gap-3 md:grid-cols-2">
-      {sakaiCon2023.map((item) => (
-        <a href={item.href} target="_blank" rel="noreferrer" class="hard-border bg-[var(--sakai-paper)]/10 p-4">
-          <h3 class="sans text-sm font-black uppercase leading-tight">{item.title}</h3>
-          <p class="mt-2 text-xs text-[var(--sakai-paper)]/90">{formatDate(item.date)} · {item.duration}</p>
-        </a>
-      ))}
-    </div>
-  </section>
+  {sakaiVirtualConferences.map((conference, index) => (
+    <section class:list={[
+      "hard-border block-shadow-soft p-6",
+      index % 2 === 0 ? "bg-[var(--sakai-ink)] text-[var(--sakai-paper)]" : "bg-[var(--sakai-paper)] text-[var(--sakai-ink)]"
+    ]}>
+      <h2 class="sans text-2xl font-black uppercase">{conference.heading} Sessions</h2>
+      <p class:list={[
+        "mt-2 text-sm",
+        index % 2 === 0 ? "text-[var(--sakai-paper)]/85" : "text-[var(--sakai-ink-soft)]"
+      ]}>
+        {conference.summary}
+      </p>
+      <a
+        href={conference.playlistHref}
+        target="_blank"
+        rel="noreferrer"
+        class:list={[
+          "mt-4 inline-flex hard-border px-3 py-2 text-xs font-bold uppercase tracking-wide",
+          index % 2 === 0
+            ? "bg-[var(--sakai-paper)] text-[var(--sakai-ink)]"
+            : "bg-[var(--sakai-ink)] text-[var(--sakai-paper)]"
+        ]}
+      >
+        Open Full Playlist
+      </a>
+      <div class="mt-4 grid gap-3 md:grid-cols-2">
+        {conference.recordings.map((item) => (
+          <a
+            href={item.href}
+            target="_blank"
+            rel="noreferrer"
+            class:list={[
+              "hard-border p-4",
+              index % 2 === 0 ? "bg-[var(--sakai-paper)]/10" : "bg-white"
+            ]}
+          >
+            <h3 class="sans text-sm font-black uppercase leading-tight">{item.title}</h3>
+            <p class:list={[
+              "mt-2 text-xs",
+              index % 2 === 0 ? "text-[var(--sakai-paper)]/90" : "text-[var(--sakai-ink-soft)]"
+            ]}>
+              {formatDate(item.date)}
+            </p>
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
 
   <section class="grid gap-4 md:grid-cols-3">
     <a href={withBase("/videos")} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">

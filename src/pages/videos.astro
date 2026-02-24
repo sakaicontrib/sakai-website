@@ -1,5 +1,6 @@
 ---
 import SectionPageLayout from "../layouts/SectionPageLayout.astro";
+import { sakaiVirtualConferences } from "../data/sakaiConRecordings";
 const withBase = (path: string) =>
   `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
 
@@ -9,45 +10,6 @@ const formatDate = (value: string) =>
     month: "short",
     day: "numeric"
   });
-
-const sakaiCon2022 = [
-  {
-    title: "Welcome and General Session: Conversations",
-    date: "2022-07-20T13:09:37Z",
-    duration: "41:55",
-    href: "https://www.youtube.com/watch?v=ZEysLkovvQo"
-  },
-  {
-    title: "General Session: Sakai Assignments",
-    date: "2022-07-20T13:14:00Z",
-    duration: "31:32",
-    href: "https://www.youtube.com/watch?v=tXDnZ5JDezo"
-  },
-  {
-    title: "Showcase: Effective Teaching Practices in Sakai",
-    date: "2022-07-20T13:15:39Z",
-    duration: "01:02:25",
-    href: "https://www.youtube.com/watch?v=7Br1WYX-1EQ"
-  },
-  {
-    title: "General Session: Sakai Rubrics",
-    date: "2022-07-20T13:16:52Z",
-    duration: "30:01",
-    href: "https://www.youtube.com/watch?v=Opky0C3zE1U"
-  },
-  {
-    title: "General Session: Accessibility in Sakai",
-    date: "2022-07-20T19:02:19Z",
-    duration: "32:24",
-    href: "https://www.youtube.com/watch?v=VxS-fpIsgeQ"
-  },
-  {
-    title: "General Session: Sakai Tests & Quizzes",
-    date: "2022-07-20T19:09:45Z",
-    duration: "36:58",
-    href: "https://www.youtube.com/watch?v=QC7D8-UEAUc"
-  }
-];
 ---
 
 <SectionPageLayout
@@ -62,17 +24,28 @@ const sakaiCon2022 = [
     </p>
   </article>
 
-  <section class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
-    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">SakaiCon22 Featured Sessions</h2>
-    <div class="mt-4 grid gap-3 md:grid-cols-2">
-      {sakaiCon2022.map((item) => (
-        <a href={item.href} target="_blank" rel="noreferrer" class="hard-border bg-white p-4">
-          <h3 class="sans text-base font-black uppercase leading-tight text-[var(--sakai-ink)]">{item.title}</h3>
-          <p class="mt-2 text-xs text-[var(--sakai-ink-soft)]">{formatDate(item.date)} · {item.duration}</p>
-        </a>
-      ))}
-    </div>
-  </section>
+  {sakaiVirtualConferences.map((conference) => (
+    <section class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+      <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">{conference.heading} Sessions</h2>
+      <p class="mt-2 text-sm text-[var(--sakai-ink-soft)]">{conference.summary}</p>
+      <a
+        href={conference.playlistHref}
+        target="_blank"
+        rel="noreferrer"
+        class="mt-4 inline-flex hard-border bg-[var(--sakai-ink)] px-3 py-2 text-xs font-bold uppercase tracking-wide text-[var(--sakai-paper)]"
+      >
+        Open Full Playlist
+      </a>
+      <div class="mt-4 grid gap-3 md:grid-cols-2">
+        {conference.recordings.map((item) => (
+          <a href={item.href} target="_blank" rel="noreferrer" class="hard-border bg-white p-4">
+            <h3 class="sans text-base font-black uppercase leading-tight text-[var(--sakai-ink)]">{item.title}</h3>
+            <p class="mt-2 text-xs text-[var(--sakai-ink-soft)]">{formatDate(item.date)}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
 
   <section class="grid gap-4 md:grid-cols-3">
     <a href="https://www.youtube.com/@SakaiCLE" target="_blank" rel="noreferrer" class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
