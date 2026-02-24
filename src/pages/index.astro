@@ -101,14 +101,14 @@ const withBase = (path: string) =>
         </a>
 
         <div class="sans flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-semibold uppercase tracking-[0.08em] text-[var(--sakai-ink)]">
-          <a href="#features" class="hover:text-[var(--sakai-terracotta)]">Features</a>
-          <a href="#community" class="hover:text-[var(--sakai-terracotta)]">Community</a>
-          <a href="#java" class="hover:text-[var(--sakai-terracotta)]">Java Foundation</a>
-          <a href="#resources" class="hover:text-[var(--sakai-terracotta)]">Resources</a>
+          <a href={withBase("/sakai-lms-features")} class="hover:text-[var(--sakai-terracotta)]">Features</a>
+          <a href={withBase("/sakai-lms-community")} class="hover:text-[var(--sakai-terracotta)]">Community</a>
+          <a href={withBase("/sakaiplus")} class="hover:text-[var(--sakai-terracotta)]">Sakai Plus</a>
+          <a href={withBase("/resources")} class="hover:text-[var(--sakai-terracotta)]">Resources</a>
         </div>
 
         <a
-          href="https://www.sakailms.org/try-sakai-lms-free"
+          href={withBase("/try-sakai-lms-free")}
           class="sans hard-border block-shadow-soft bg-[var(--sakai-terracotta)] px-4 py-2 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:-translate-x-0.5 hover:-translate-y-0.5"
         >
           Try Sakai
@@ -144,7 +144,7 @@ const withBase = (path: string) =>
               View Source
             </a>
             <a
-              href="https://www.sakailms.org/sakai-lms-community"
+              href={withBase("/sakai-lms-community")}
               class="sans hard-border block-shadow bg-[var(--sakai-paper)] px-5 py-3 text-sm font-bold uppercase tracking-[0.08em] text-[var(--sakai-ink)] transition hover:-translate-x-1 hover:-translate-y-1"
             >
               Meet Community
@@ -281,13 +281,13 @@ const withBase = (path: string) =>
 
           <div class="mt-7 flex flex-wrap gap-4">
             <a
-              href="https://www.sakailms.org/sakai-lms-community"
+              href={withBase("/sakai-lms-community")}
               class="sans hard-border block-shadow-soft bg-[var(--sakai-terracotta)] px-5 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:-translate-x-0.5 hover:-translate-y-0.5"
             >
               Community Members
             </a>
             <a
-              href="https://www.sakailms.org/resources"
+              href={withBase("/resources")}
               class="sans hard-border block-shadow-soft bg-[var(--sakai-paper)] px-5 py-3 text-sm font-bold uppercase tracking-[0.08em] text-[var(--sakai-ink)] transition hover:-translate-x-0.5 hover:-translate-y-0.5"
             >
               Resource Library
@@ -316,17 +316,16 @@ const withBase = (path: string) =>
       </section>
 
       <section id="resources" class="reveal delay-3 hard-border block-shadow bg-[var(--sakai-paper)] p-6 md:p-8">
-        <h2 class="sans text-4xl leading-none font-black uppercase text-[var(--sakai-ink)] md:text-6xl">Build Momentum This Week</h2>
+        <h2 class="sans text-4xl leading-none font-black uppercase text-[var(--sakai-ink)] md:text-6xl">Evaluate Sakai For Your Institution</h2>
         <p class="mt-5 max-w-3xl text-lg leading-relaxed text-[var(--sakai-ink)]">
-          Ready to leave Wix and launch on infrastructure you control. Start with these direct paths for evaluation,
-          implementation details, and community contact.
+          Use these direct paths for technical evaluation, implementation planning, and engagement with the Sakai open-source community.
         </p>
         <div class="mt-6 grid gap-4 md:grid-cols-3">
-          <a href="https://www.sakailms.org/try-sakai-lms-free" class="hard-border block-shadow-soft bg-white p-4 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+          <a href={withBase("/try-sakai-lms-free")} class="hard-border block-shadow-soft bg-white p-4 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
             <p class="sans text-sm font-extrabold uppercase tracking-[0.08em] text-[var(--sakai-terracotta)]">Try Sakai</p>
             <p class="mt-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Request a trial and evaluate your migration fit.</p>
           </a>
-          <a href="https://www.sakailms.org/resources" class="hard-border block-shadow-soft bg-white p-4 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+          <a href={withBase("/resources")} class="hard-border block-shadow-soft bg-white p-4 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
             <p class="sans text-sm font-extrabold uppercase tracking-[0.08em] text-[var(--sakai-terracotta)]">Resources</p>
             <p class="mt-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Documentation, stories, and community guidance.</p>
           </a>
@@ -347,9 +346,9 @@ const withBase = (path: string) =>
 
         <nav class="sans flex flex-wrap gap-4 text-xs font-bold uppercase tracking-[0.12em] text-[var(--sakai-ink)]">
           <a href="https://github.com/sakaiproject/sakai" class="hover:text-[var(--sakai-terracotta)]">GitHub</a>
-          <a href="https://www.sakailms.org/sakai-lms-community" class="hover:text-[var(--sakai-terracotta)]">Community</a>
-          <a href="https://www.sakailms.org/resources" class="hover:text-[var(--sakai-terracotta)]">Resources</a>
-          <a href="https://www.sakailms.org/accessibility" class="hover:text-[var(--sakai-terracotta)]">Accessibility</a>
+          <a href={withBase("/sakai-lms-community")} class="hover:text-[var(--sakai-terracotta)]">Community</a>
+          <a href={withBase("/resources")} class="hover:text-[var(--sakai-terracotta)]">Resources</a>
+          <a href={withBase("/accessibility")} class="hover:text-[var(--sakai-terracotta)]">Accessibility</a>
         </nav>
 
         <p class="text-sm text-[var(--sakai-ink-soft)]">© {new Date().getFullYear()} Sakai Community</p>

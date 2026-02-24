@@ -1,0 +1,54 @@
+---
+import SectionPageLayout from "../layouts/SectionPageLayout.astro";
+
+const resources = [
+  {
+    title: "Sakai Community Documentation",
+    description:
+      "Find step-by-step help on using Sakai's features and elements in the official user guides.",
+    href: "https://sakai.screenstepslive.com/s/sakai_help/m/101295"
+  },
+  {
+    title: "Sakai Confluence Wiki",
+    description:
+      "Connect with community members, contribute to the project, and track platform direction and deployment best practices.",
+    href: "https://sakaiproject.atlassian.net/wiki/spaces/CONF/overview?mode=global"
+  },
+  {
+    title: "Sakai YouTube Channel",
+    description:
+      "Watch feature walkthroughs, release highlights, and community sessions from the Sakai project.",
+    href: "https://www.youtube.com/@SakaiCLE"
+  }
+];
+---
+
+<SectionPageLayout
+  title="Sakai Resources | Sakai LMS"
+  description="Sakai provides community documentation, wiki resources, and videos to support effective learning environments."
+  kicker="Sakai Resources"
+  heading="Resources For Sakai Teams"
+>
+  <article class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+    <p class="text-lg leading-relaxed text-[var(--sakai-ink)]">
+      Sakai provides an array of resources, including a community wiki and user guides, as well as videos to help you create effective learning environments.
+    </p>
+  </article>
+
+  <section class="grid gap-4 md:grid-cols-3">
+    {resources.map((resource) => (
+      <a href={resource.href} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+        <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">{resource.title}</h2>
+        <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">{resource.description}</p>
+      </a>
+    ))}
+  </section>
+
+  <section class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-6 text-[var(--sakai-paper)]">
+    <h2 class="sans text-2xl font-black uppercase">Need Help With Sakai?</h2>
+    <p class="mt-3 max-w-3xl text-sm leading-relaxed text-[var(--sakai-paper)]/90">
+      The Sakai Community Documentation provides answers to common usage questions across core tools. The Sakai Confluence Wiki expands that with roadmap context,
+      collaboration channels, and project-level guidance for implementers and contributors.
+    </p>
+  </section>
+</SectionPageLayout>

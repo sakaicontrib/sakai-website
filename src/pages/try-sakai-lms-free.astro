@@ -1,0 +1,42 @@
+---
+import SectionPageLayout from "../layouts/SectionPageLayout.astro";
+---
+
+<SectionPageLayout
+  title="Try Sakai Free | Sakai LMS"
+  description="Try Sakai via cloud-hosted sandbox access or self-hosted deployment from source releases."
+  kicker="Try Sakai"
+  heading="Try Sakai Free"
+>
+  <section class="grid gap-4 md:grid-cols-2">
+    <article class="hard-border block-shadow-soft bg-white p-5">
+      <p class="sans text-xs font-black uppercase tracking-[0.1em] text-[var(--sakai-terracotta)]">Cloud Hosted</p>
+      <h2 class="sans mt-2 text-2xl font-black uppercase text-[var(--sakai-ink)]">Sample Sakai Online</h2>
+      <ul class="mt-3 grid gap-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+        <li>Create a sample Sakai account courtesy of Longsight, Inc.</li>
+        <li>Create a sample course as an instructor and experience it as a student.</li>
+        <li>Kick the tires, ask questions, and access online help.</li>
+      </ul>
+      <a
+        href="https://trysakai.longsight.com/portal/site/!gateway/tool/!gateway-110"
+        class="sans mt-5 inline-block hard-border bg-[var(--sakai-ink)] px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-white"
+      >
+        Try Cloud-Hosted Sakai
+      </a>
+    </article>
+
+    <article class="hard-border block-shadow-soft bg-white p-5">
+      <p class="sans text-xs font-black uppercase tracking-[0.1em] text-[var(--sakai-terracotta)]">Self Hosted</p>
+      <h2 class="sans mt-2 text-2xl font-black uppercase text-[var(--sakai-ink)]">Deploy Sakai Yourself</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+        Download Sakai free and configure it yourself to sample Sakai capabilities in a more independent environment.
+      </p>
+      <a
+        href="https://source.sakaiproject.org/release/25.1/"
+        class="sans mt-5 inline-block hard-border bg-[var(--sakai-paper)] px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[var(--sakai-ink)]"
+      >
+        Try Self-Hosted Sakai
+      </a>
+    </article>
+  </section>
+</SectionPageLayout>

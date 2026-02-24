@@ -1,0 +1,74 @@
+---
+import SectionPageLayout from "../layouts/SectionPageLayout.astro";
+
+const affiliates = [
+  {
+    name: "Longsight",
+    description:
+      "Leading developer of new Sakai functionality, with cloud hosting and support services for Sakai institutions.",
+    href: "https://www.longsight.com"
+  },
+  {
+    name: "Learning Experiences",
+    description:
+      "Focused on adding value to Apereo communities and encouraging open source and open content in education.",
+    href: "https://www.learnxp.com"
+  },
+  {
+    name: "EDF",
+    description:
+      "Global education technology company providing Sakai cloud services, development, and support for next-generation learning practice.",
+    href: "https://www.edf.global"
+  }
+];
+---
+
+<SectionPageLayout
+  title="Sakai Community | Sakai LMS"
+  description="Educators who work directly with teaching and learning drive Sakai's open-source development and innovation."
+  kicker="The Sakai Community"
+  heading="Community-Led Innovation"
+>
+  <article class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+    <p class="text-lg leading-relaxed text-[var(--sakai-ink)]">
+      Educators who work directly with teaching and learning drive Sakai's open-source development and innovation.
+      Member institutions collaborate to enhance Sakai, create integrations, and develop new functionality for digital learning environments.
+    </p>
+  </article>
+
+  <section class="grid gap-4 md:grid-cols-2">
+    <article class="hard-border block-shadow-soft bg-white p-5">
+      <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Sakai Community Leadership</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+        The Sakai community is coordinated by the Apereo Foundation and works together to create a cutting-edge learning environment.
+        The Sakai Project Management Committee (PMC) provides strategic oversight through meritocratic selection and open, consensus-based decision making.
+      </p>
+      <a href="https://sakaiproject.atlassian.net/wiki/spaces/CONF/overview?mode=global" class="sans mt-4 inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
+        Explore Project Wiki
+      </a>
+    </article>
+
+    <article class="hard-border block-shadow-soft bg-white p-5">
+      <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Member Institutions</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+        Institutions collaborate on roadmap priorities based on real teaching and learning needs, making Sakai's evolution practical, transparent, and shared.
+      </p>
+      <a href="https://www.sakailms.org/sakai-lms-community/member-institutions" class="sans mt-4 inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
+        View Member Institutions
+      </a>
+    </article>
+  </section>
+
+  <section class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-6 text-[var(--sakai-paper)]">
+    <h2 class="sans text-2xl font-black uppercase">Sakai Commercial Affiliates</h2>
+    <p class="mt-2 text-sm text-[var(--sakai-paper)]/85">Commercial affiliates develop, host, and support Sakai.</p>
+    <div class="mt-4 grid gap-3 md:grid-cols-3">
+      {affiliates.map((affiliate) => (
+        <a href={affiliate.href} class="hard-border bg-[var(--sakai-paper)]/10 p-4">
+          <h3 class="sans text-base font-black uppercase">{affiliate.name}</h3>
+          <p class="mt-2 text-xs leading-relaxed text-[var(--sakai-paper)]/90">{affiliate.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</SectionPageLayout>
