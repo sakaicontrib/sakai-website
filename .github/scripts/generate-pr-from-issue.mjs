@@ -203,6 +203,11 @@ async function llmCompletion({ providerConfig, systemPrompt, userPrompt }) {
       model,
       temperature: 0.2,
       max_tokens: maxTokens,
+      include_reasoning: false,
+      reasoning: {
+        effort: "none",
+        exclude: true,
+      },
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt },
