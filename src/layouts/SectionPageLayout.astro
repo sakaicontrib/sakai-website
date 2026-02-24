@@ -1,0 +1,66 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  kicker: string;
+  heading: string;
+}
+
+const { title, description, kicker, heading } = Astro.props;
+
+const links = [
+  { href: "/", label: "Welcome" },
+  { href: "/sakai-lms-features", label: "Features" },
+  { href: "/resources", label: "Resources" },
+  { href: "/sakaiplus", label: "Sakai Plus" },
+  { href: "/sakai-lms-community", label: "Community" },
+  { href: "/try-sakai-lms-free", label: "Try Sakai" },
+  { href: "/accessibility", label: "Accessibility" }
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="min-h-screen bg-[var(--sakai-cream)]">
+    <div class="bg-[var(--sakai-ink)] px-4 py-2 text-center text-xs text-[var(--sakai-paper)] sm:text-sm">
+      <span class="punch">Sakai LMS</span>
+      <span class="mx-2 text-[var(--sakai-aqua)]">|</span>
+      Real open-source collaboration for higher education
+    </div>
+
+    <header class="bg-grid border-b-2 border-[var(--sakai-black)] bg-[var(--sakai-paper)]">
+      <nav class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 md:px-8">
+        <a href="/" class="flex items-center gap-3">
+          <img src="/images/sakai-logo.png" alt="Sakai logo" class="h-9 w-auto" />
+          <span class="sans text-sm font-bold uppercase tracking-[0.18em] text-[var(--sakai-ink)]">Sakai LMS</span>
+        </a>
+
+        <div class="sans flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--sakai-ink)] md:text-sm">
+          {links.map((link) => (
+            <a href={link.href} class="hover:text-[var(--sakai-terracotta)]">{link.label}</a>
+          ))}
+        </div>
+      </nav>
+    </header>
+
+    <main class="mx-auto w-full max-w-5xl px-4 py-10 md:px-8 md:py-14">
+      <span class="ribbon sans text-xs uppercase tracking-[0.14em] md:text-sm">{kicker}</span>
+      <h1 class="sans mt-5 text-4xl leading-none font-black uppercase text-[var(--sakai-ink)] md:text-6xl">{heading}</h1>
+      <div class="mt-7 grid gap-6">
+        <slot />
+      </div>
+    </main>
+
+    <footer class="border-t-2 border-[var(--sakai-black)] bg-[var(--sakai-paper)]">
+      <div class="mx-auto flex w-full max-w-7xl flex-col gap-5 px-4 py-7 md:px-8 lg:flex-row lg:items-center lg:justify-between">
+        <a href="/" class="flex items-center gap-3">
+          <img src="/images/sakai-logo-footer.png" alt="Sakai footer logo" class="h-10 w-auto" />
+          <p class="sans text-xs font-bold uppercase tracking-[0.14em] text-[var(--sakai-ink)]">Community-Led for 20+ Years</p>
+        </a>
+
+        <p class="text-sm text-[var(--sakai-ink-soft)]">© {new Date().getFullYear()} Sakai Community</p>
+      </div>
+    </footer>
+  </div>
+</BaseLayout>
