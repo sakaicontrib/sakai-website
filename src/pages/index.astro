@@ -77,6 +77,9 @@ const testimonials = [
     image: "/images/chuck-severance.jpg"
   }
 ];
+
+const withBase = (path: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
 ---
 
 <BaseLayout
@@ -93,7 +96,7 @@ const testimonials = [
     <header class="bg-grid sticky top-0 z-40 border-b-2 border-[var(--sakai-black)] bg-[var(--sakai-paper)]/95 backdrop-blur">
       <nav class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 md:px-8">
         <a href="#top" class="flex items-center gap-3">
-          <img src="/images/sakai-logo.png" alt="Sakai logo" class="h-9 w-auto" />
+          <img src={withBase("/images/sakai-logo.png")} alt="Sakai logo" class="h-9 w-auto" />
           <span class="sans text-sm font-bold uppercase tracking-[0.18em] text-[var(--sakai-ink)]">Sakai LMS</span>
         </a>
 
@@ -152,10 +155,10 @@ const testimonials = [
         <div class="reveal delay-1 relative">
           <div class="absolute -left-4 -top-4 hidden h-24 w-24 border-2 border-[var(--sakai-black)] bg-[var(--sakai-aqua)] md:block"></div>
           <article class="hard-border block-shadow relative overflow-hidden bg-[var(--sakai-paper)]">
-            <img src="/images/abstract-hero.jpg" alt="Sakai abstract brand texture" class="h-32 w-full object-cover md:h-36" />
+            <img src={withBase("/images/abstract-hero.jpg")} alt="Sakai abstract brand texture" class="h-32 w-full object-cover md:h-36" />
             <div class="dot-grid p-4 md:p-6">
               <img
-                src="/images/hero-device.png"
+                src={withBase("/images/hero-device.png")}
                 alt="Sakai course overview on laptop and student account on phone"
                 class="hard-border h-auto w-full bg-white object-cover"
                 loading="eager"
@@ -192,7 +195,7 @@ const testimonials = [
       <section class="grid items-center gap-8 lg:grid-cols-[0.95fr_1.05fr]">
         <div class="reveal delay-1 hard-border block-shadow overflow-hidden bg-[var(--sakai-paper)]">
           <img
-            src="/images/educators.jpg"
+            src={withBase("/images/educators.jpg")}
             alt="Educator teaching a diverse group of college students"
             class="h-full min-h-80 w-full object-cover"
             loading="lazy"
@@ -240,7 +243,7 @@ const testimonials = [
             <figure class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-5">
               <blockquote class="text-base leading-relaxed text-[var(--sakai-ink)]">"{item.quote}"</blockquote>
               <figcaption class="mt-4 flex items-center gap-3">
-                <img src={item.image} alt={item.name} class="hard-border h-14 w-14 rounded-full object-cover" loading="lazy" />
+                <img src={withBase(item.image)} alt={item.name} class="hard-border h-14 w-14 rounded-full object-cover" loading="lazy" />
                 <div>
                   <p class="sans text-sm font-bold uppercase tracking-[0.08em] text-[var(--sakai-ink)]">{item.name}</p>
                   <p class="text-sm text-[var(--sakai-ink-soft)]">{item.role}</p>
@@ -254,7 +257,7 @@ const testimonials = [
       <section id="community" class="grid gap-8 lg:grid-cols-[1fr_1fr]">
         <div class="reveal delay-1 hard-border block-shadow overflow-hidden bg-[var(--sakai-paper)]">
           <img
-            src="/images/community-hands.jpg"
+            src={withBase("/images/community-hands.jpg")}
             alt="Hands arranged in a light bulb shape representing Sakai's open-source community"
             class="h-full min-h-80 w-full object-cover"
             loading="lazy"
@@ -338,7 +341,7 @@ const testimonials = [
     <footer class="border-t-2 border-[var(--sakai-black)] bg-[var(--sakai-paper)]">
       <div class="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-8 md:px-8 lg:flex-row lg:items-center lg:justify-between">
         <a href="#top" class="flex items-center gap-3">
-          <img src="/images/sakai-logo-footer.png" alt="Sakai footer logo" class="h-10 w-auto" />
+          <img src={withBase("/images/sakai-logo-footer.png")} alt="Sakai footer logo" class="h-10 w-auto" />
           <p class="sans text-xs font-bold uppercase tracking-[0.14em] text-[var(--sakai-ink)]">Real Open Source Learning</p>
         </a>
 
