@@ -1,7 +1,5 @@
 ---
 import SectionPageLayout from "../layouts/SectionPageLayout.astro";
-const withBase = (path: string) =>
-  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
 
 const affiliates = [
   {
@@ -93,7 +91,7 @@ const communityStories = [
     </p>
   </section>
 
-  <section class="grid gap-4 md:grid-cols-2">
+  <section class="grid gap-4">
     <article class="hard-border block-shadow-soft bg-white p-5">
       <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Sakai Community Leadership</h2>
       <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
@@ -107,17 +105,6 @@ const communityStories = [
       </ul>
       <a href="https://sakaiproject.atlassian.net/wiki/spaces/CONF/overview?mode=global" class="sans mt-4 inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
         Explore Project Wiki
-      </a>
-    </article>
-
-    <article class="hard-border block-shadow-soft bg-white p-5">
-      <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Member Institutions</h2>
-      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
-        Institutions collaborate on roadmap priorities based on real teaching and learning needs, making Sakai's evolution practical, transparent, and shared.
-        This community-driven model lets institutions enhance Sakai directly or partner with affiliates for integrations and new capabilities.
-      </p>
-      <a href={withBase("/sakai-lms-community/member-institutions")} class="sans mt-4 inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
-        View Member Institutions
       </a>
     </article>
   </section>
