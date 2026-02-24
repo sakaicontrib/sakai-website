@@ -1,0 +1,98 @@
+---
+import SectionPageLayout from "../layouts/SectionPageLayout.astro";
+const withBase = (path: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
+
+const formatDate = (value: string) =>
+  new Date(value).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric"
+  });
+
+const sakaiCon2023 = [
+  {
+    title: "SakaiCon23 Welcome and Sakai 23 Highlights",
+    date: "2023-08-21T21:29:26.366Z",
+    duration: "20:33",
+    href: "https://www.youtube.com/watch?v=dXEi5gpWoNk"
+  },
+  {
+    title: "The Plan Unidigital: Sakai Innovations from Spanish Universities",
+    date: "2023-08-21T21:29:26.366Z",
+    duration: "32:09",
+    href: "https://www.youtube.com/watch?v=2u7S2Px0IIs"
+  },
+  {
+    title: "Sakai Great Teaching Showcase",
+    date: "2023-08-21T21:29:26.365Z",
+    duration: "56:07",
+    href: "https://www.youtube.com/watch?v=PEu1DPLOPi4"
+  },
+  {
+    title: "Sakai Lessons: Julianne's 7 Favorite Things",
+    date: "2023-08-21T21:29:26.364Z",
+    duration: "30:13",
+    href: "https://www.youtube.com/watch?v=lVKwn4Wxer8"
+  },
+  {
+    title: "Found in Translation: Empowering Multilingualism in Sakai",
+    date: "2023-08-21T21:29:26.364Z",
+    duration: "32:51",
+    href: "https://www.youtube.com/watch?v=SJs1zp2ZNks"
+  },
+  {
+    title: "Creative Approaches to Assessment in Sakai",
+    date: "2023-08-21T21:29:26.363Z",
+    duration: "33:07",
+    href: "https://www.youtube.com/watch?v=upe_M47P4XU"
+  },
+  {
+    title: "Group Awareness and Collaboration in Sakai",
+    date: "2023-08-21T21:29:26.362Z",
+    duration: "32:33",
+    href: "https://www.youtube.com/watch?v=izx3ykZpP2w"
+  }
+];
+---
+
+<SectionPageLayout
+  title="Events | Sakai LMS"
+  description="Sakai hosts periodic conferences and community events, including recent SakaiCon sessions."
+  kicker="Events"
+  heading="Sakai Conference Sessions"
+>
+  <article class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+    <p class="text-lg leading-relaxed text-[var(--sakai-ink)]">
+      Sakai holds periodic conferences and events with sessions led by institutions, implementers, and contributors across the global community.
+    </p>
+  </article>
+
+  <section class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-6 text-[var(--sakai-paper)]">
+    <h2 class="sans text-2xl font-black uppercase">SakaiCon 2023 Sessions</h2>
+    <p class="mt-2 text-sm text-[var(--sakai-paper)]/85">Highlights and session recordings from the SakaiCon 2023 lineup.</p>
+    <div class="mt-4 grid gap-3 md:grid-cols-2">
+      {sakaiCon2023.map((item) => (
+        <a href={item.href} target="_blank" rel="noreferrer" class="hard-border bg-[var(--sakai-paper)]/10 p-4">
+          <h3 class="sans text-sm font-black uppercase leading-tight">{item.title}</h3>
+          <p class="mt-2 text-xs text-[var(--sakai-paper)]/90">{formatDate(item.date)} · {item.duration}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="grid gap-4 md:grid-cols-3">
+    <a href={withBase("/videos")} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+      <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">More Session Videos</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Browse additional SakaiCon recordings and feature sessions.</p>
+    </a>
+    <a href={withBase("/conference-resources")} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+      <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">Conference Resources</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Access reference materials shared for EDUCAUSE and event attendees.</p>
+    </a>
+    <a href="https://www.youtube.com/@SakaiCLE" target="_blank" rel="noreferrer" class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+      <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">Sakai YouTube</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Follow the Sakai channel for the latest conference uploads and demos.</p>
+    </a>
+  </section>
+</SectionPageLayout>
