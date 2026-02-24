@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import LanguageSwitcher from "../components/LanguageSwitcher.astro";
 
 const pillars = [
   {
@@ -107,15 +106,12 @@ const withBase = (path: string) =>
           <a href={withBase("/resources")} class="hover:text-[var(--sakai-terracotta)]">Resources</a>
         </div>
 
-        <div class="flex items-center gap-3">
-          <LanguageSwitcher />
-          <a
-            href={withBase("/try-sakai-lms-free")}
-            class="sans hard-border block-shadow-soft bg-[var(--sakai-terracotta)] px-4 py-2 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:-translate-x-0.5 hover:-translate-y-0.5"
-          >
-            Try Sakai
-          </a>
-        </div>
+        <a
+          href={withBase("/try-sakai-lms-free")}
+          class="sans hard-border block-shadow-soft bg-[var(--sakai-terracotta)] px-4 py-2 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:-translate-x-0.5 hover:-translate-y-0.5"
+        >
+          Try Sakai
+        </a>
       </nav>
     </header>
 
