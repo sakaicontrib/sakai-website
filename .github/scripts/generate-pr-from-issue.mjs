@@ -274,7 +274,7 @@ async function main() {
     "If no code/content change is possible, return an empty patch and explain in pr_body.",
   ].join(" ");
 
-  const userPrompt = [
+  const baseUserPrompt = [
     `Issue #${issueNumber}: ${issue.title}`,
     "",
     "Issue body:",
@@ -291,30 +291,51 @@ async function main() {
     "",
     "Generate the patch now.",
   ].join("\n");
+  let generated = null;
+  let lastApplyError = "";
+  const maxPatchAttempts = 2;
 
-  const generated = await llmCompletion({
-    providerConfig,
-    systemPrompt,
-    userPrompt,
-  });
+  for (let attempt = 1; attempt <= maxPatchAttempts; attempt += 1) {
+    const retryPrompt = lastApplyError
+      ? [
+          "",
+          `Previous patch failed to apply: ${lastApplyError}`,
+          "Generate a corrected unified diff with proper file headers and hunk markers.",
+          "Do not include explanations or prose.",
+        ].join("\n")
+      : "";
 
-  const rawPatch = String(generated.patch || "");
-  const patch = stripFences(rawPatch);
+    generated = await llmCompletion({
+      providerConfig,
+      systemPrompt,
+      userPrompt: `${baseUserPrompt}${retryPrompt}`,
+    });
 
-  if (!patch.trim()) {
-    setOutput("changed", "false");
-    setOutput("no_change_reason", generated.pr_body || "Model returned an empty patch.");
-    return;
-  }
+    const rawPatch = String(generated.patch || "");
+    const patch = stripFences(rawPatch);
 
-  const patchPath = join(process.cwd(), ".ai-generated.patch");
-  writeFileSync(patchPath, patch.endsWith("\n") ? patch : `${patch}\n`, "utf8");
+    if (!patch.trim()) {
+      setOutput("changed", "false");
+      setOutput("no_change_reason", generated.pr_body || "Model returned an empty patch.");
+      return;
+    }
 
-  try {
-    run("git", ["apply", "--3way", "--whitespace=fix", patchPath]);
-  } finally {
-    if (existsSync(patchPath)) {
-      unlinkSync(patchPath);
+    const patchPath = join(process.cwd(), ".ai-generated.patch");
+    writeFileSync(patchPath, patch.endsWith("\n") ? patch : `${patch}\n`, "utf8");
+
+    try {
+      run("git", ["apply", "--check", "--3way", patchPath]);
+      run("git", ["apply", "--3way", "--whitespace=fix", patchPath]);
+      break;
+    } catch (error) {
+      lastApplyError = error instanceof Error ? error.message : String(error);
+      if (attempt === maxPatchAttempts) {
+        throw new Error(`Patch apply failed after ${maxPatchAttempts} attempts: ${lastApplyError}`);
+      }
+    } finally {
+      if (existsSync(patchPath)) {
+        unlinkSync(patchPath);
+      }
     }
   }
 
@@ -325,17 +346,17 @@ async function main() {
     return;
   }
 
-  const branchSuffix = slugify(String(generated.branch_suffix || issue.title || "update")) || "update";
+  const branchSuffix = slugify(String(generated?.branch_suffix || issue.title || "update")) || "update";
   const branchName = `codex/issue-${issueNumber}-${branchSuffix}`;
 
-  const prTitle = String(generated.pr_title || `AI: Resolve #${issueNumber}`).slice(0, 240).trim();
+  const prTitle = String(generated?.pr_title || `AI: Resolve #${issueNumber}`).slice(0, 240).trim();
 
-  let prBody = String(generated.pr_body || "").trim();
+  let prBody = String(generated?.pr_body || "").trim();
   if (!/\b(closes|fixes|resolves)\s+#\d+\b/i.test(prBody)) {
     prBody = `${prBody}\n\nCloses #${issueNumber}`.trim();
   }
 
-  const commitMessage = String(generated.commit_message || `feat: address issue #${issueNumber}`)
+  const commitMessage = String(generated?.commit_message || `feat: address issue #${issueNumber}`)
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, 240);
