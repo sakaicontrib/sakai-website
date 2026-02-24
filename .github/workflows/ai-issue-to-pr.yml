@@ -32,7 +32,6 @@ jobs:
             const shouldProcess = (issue) => {
               if (issue.pull_request) return false;
               const labels = labelsOf(issue);
-              if (!labels.includes('ai-change-request')) return false;
               if (labels.includes('ai-in-progress')) return false;
               if (labels.includes('ai-failed')) return false;
               if (labels.includes('ai-pr-opened')) return false;
@@ -59,7 +58,7 @@ jobs:
               const labels = labelsOf(manualIssue);
               if (
                 !manualIssue.pull_request &&
-                labels.includes('ai-change-request') &&
+                !labels.includes('ai-failed') &&
                 !labels.includes('ai-in-progress')
               ) {
                 unique.add(manualInput);
@@ -71,7 +70,6 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 state: 'open',
-                labels: 'ai-change-request',
                 per_page: 100,
               });
 
@@ -130,7 +128,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: Number('${{ matrix.issue_number }}'),
-              labels: ['ai-in-progress'],
+              labels: ['ai-change-request', 'ai-in-progress'],
             });
 
             try {

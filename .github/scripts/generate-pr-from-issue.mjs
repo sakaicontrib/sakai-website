@@ -93,6 +93,17 @@ function readTextFile(path) {
   }
 }
 
+function hasSubIssueSyntax(text) {
+  if (!text) return false;
+
+  // Common markdown task list patterns used to represent sub-issues.
+  if (/(^|\n)\s*-\s*\[[ xX]\]\s*#\d+\b/.test(text)) return true;
+  if (/(^|\n)\s*-\s*\[[ xX]\]\s*https:\/\/github\.com\/[^/\s]+\/[^/\s]+\/issues\/\d+\b/i.test(text)) return true;
+  if (/\bsub-issues?\b/i.test(text)) return true;
+
+  return false;
+}
+
 async function githubRequest(pathname, token) {
   const repo = requireEnv("GITHUB_REPOSITORY");
   const url = `https://api.github.com/repos/${repo}${pathname}`;
@@ -186,6 +197,15 @@ async function main() {
   const issue = await githubRequest(`/issues/${issueNumber}`, githubToken);
   if (issue.pull_request) {
     throw new Error(`Issue #${issueNumber} is a pull request`);
+  }
+
+  if (hasSubIssueSyntax(issue.body || "")) {
+    setOutput("changed", "false");
+    setOutput(
+      "no_change_reason",
+      "Sub-issues are not allowed. Please submit one standalone change request per issue.",
+    );
+    return;
   }
 
   const fileList = safeRun("git", ["ls-files"])

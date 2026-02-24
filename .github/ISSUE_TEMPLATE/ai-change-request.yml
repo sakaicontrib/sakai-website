@@ -8,6 +8,7 @@ body:
     attributes:
       value: |
         Explain the change in plain language. The automation will draft a PR from this issue.
+        One issue = one change request. No sub-issues.
 
   - type: textarea
     id: change_request
