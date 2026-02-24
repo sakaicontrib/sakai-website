@@ -13,16 +13,9 @@ const withBase = (path: string) =>
   `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
 
 const links = [
-  { href: "/", label: "Welcome" },
-  { href: "/sakai-lms-features", label: "Features" },
-  { href: "/resources", label: "Resources" },
-  { href: "/events", label: "Events" },
-  { href: "/releases", label: "Releases" },
-  { href: "/connect", label: "Connect" },
-  { href: "/shop", label: "Merch" },
+  { href: "/sakai-lms-features", label: "Product" },
   { href: "/sakai-lms-community", label: "Community" },
-  { href: "/try-sakai-lms-free", label: "Try Sakai" },
-  { href: "/accessibility", label: "Accessibility" }
+  { href: "/resources", label: "Resources" }
 ];
 ---
 
@@ -46,6 +39,13 @@ const links = [
             <a href={withBase(link.href)} class="hover:text-[var(--sakai-terracotta)]">{link.label}</a>
           ))}
         </div>
+
+        <a
+          href={withBase("/try-sakai-lms-free")}
+          class="sans hard-border block-shadow-soft bg-[var(--sakai-terracotta)] px-4 py-2 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:-translate-x-0.5 hover:-translate-y-0.5"
+        >
+          Try Sakai
+        </a>
       </nav>
     </header>
 
@@ -63,6 +63,16 @@ const links = [
           <img src={withBase("/images/sakai-logo.png")} alt="Sakai logo" class="h-10 w-auto" />
           <p class="sans text-xs font-bold uppercase tracking-[0.14em] text-[var(--sakai-ink)]">Community-Led for 20+ Years</p>
         </a>
+
+        <nav class="sans flex flex-wrap gap-4 text-xs font-bold uppercase tracking-[0.12em] text-[var(--sakai-ink)]">
+          <a href={withBase("/sakai-lms-features")} class="hover:text-[var(--sakai-terracotta)]">Features</a>
+          <a href={withBase("/releases")} class="hover:text-[var(--sakai-terracotta)]">Releases</a>
+          <a href={withBase("/sakai-lms-community")} class="hover:text-[var(--sakai-terracotta)]">Community</a>
+          <a href={withBase("/events")} class="hover:text-[var(--sakai-terracotta)]">Events</a>
+          <a href={withBase("/connect")} class="hover:text-[var(--sakai-terracotta)]">Connect</a>
+          <a href={withBase("/shop")} class="hover:text-[var(--sakai-terracotta)]">Merch</a>
+          <a href={withBase("/resources")} class="hover:text-[var(--sakai-terracotta)]">Resources</a>
+        </nav>
 
         <p class="text-sm text-[var(--sakai-ink-soft)]">© {new Date().getFullYear()} Sakai Project</p>
       </div>
