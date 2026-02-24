@@ -111,12 +111,41 @@ async function githubRequest(pathname, token) {
   return json;
 }
 
-async function openAICompletion({ apiKey, model, systemPrompt, userPrompt }) {
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+function resolveOpenRouterConfig() {
+  const apiKey = requireEnv("OPENROUTER_API_KEY");
+  const baseUrl = String(process.env.LLM_API_BASE_URL || "https://openrouter.ai/api/v1").replace(/\/+$/, "");
+  const endpoint = String(process.env.LLM_CHAT_COMPLETIONS_PATH || "/chat/completions");
+  const model = process.env.LLM_MODEL || process.env.OPENROUTER_MODEL || "moonshotai/kimi-k2.5";
+
+  return {
+    apiKey,
+    baseUrl,
+    endpoint: endpoint.startsWith("/") ? endpoint : `/${endpoint}`,
+    model,
+  };
+}
+
+function buildOpenRouterHeaders() {
+  const repo = process.env.GITHUB_REPOSITORY || "";
+  const referer =
+    process.env.OPENROUTER_HTTP_REFERER ||
+    (repo ? `https://github.com/${repo}` : "https://github.com");
+  const title = process.env.OPENROUTER_X_TITLE || (repo ? `${repo} ai issue bot` : "ai issue bot");
+
+  return {
+    "HTTP-Referer": referer,
+    "X-Title": title,
+  };
+}
+
+async function llmCompletion({ providerConfig, systemPrompt, userPrompt }) {
+  const { apiKey, model, baseUrl, endpoint } = providerConfig;
+  const res = await fetch(`${baseUrl}${endpoint}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${apiKey}`,
+      ...buildOpenRouterHeaders(),
     },
     body: JSON.stringify({
       model,
@@ -131,12 +160,12 @@ async function openAICompletion({ apiKey, model, systemPrompt, userPrompt }) {
 
   const payload = await res.json();
   if (!res.ok) {
-    throw new Error(`OpenAI API ${res.status}: ${JSON.stringify(payload)}`);
+    throw new Error(`LLM API ${res.status}: ${JSON.stringify(payload)}`);
   }
 
   const content = payload?.choices?.[0]?.message?.content;
   if (!content) {
-    throw new Error("OpenAI API returned no content");
+    throw new Error("LLM API returned no content");
   }
 
   let parsed;
@@ -152,8 +181,7 @@ async function openAICompletion({ apiKey, model, systemPrompt, userPrompt }) {
 async function main() {
   const issueNumber = Number(requireEnv("ISSUE_NUMBER"));
   const githubToken = requireEnv("GITHUB_TOKEN");
-  const openAIKey = requireEnv("OPENAI_API_KEY");
-  const model = process.env.OPENAI_MODEL || "gpt-4.1";
+  const providerConfig = resolveOpenRouterConfig();
 
   const issue = await githubRequest(`/issues/${issueNumber}`, githubToken);
   if (issue.pull_request) {
@@ -210,9 +238,8 @@ async function main() {
     "Generate the patch now.",
   ].join("\n");
 
-  const generated = await openAICompletion({
-    apiKey: openAIKey,
-    model,
+  const generated = await llmCompletion({
+    providerConfig,
     systemPrompt,
     userPrompt,
   });

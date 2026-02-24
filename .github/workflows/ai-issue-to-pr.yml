@@ -34,6 +34,7 @@ jobs:
               const labels = labelsOf(issue);
               if (!labels.includes('ai-change-request')) return false;
               if (labels.includes('ai-in-progress')) return false;
+              if (labels.includes('ai-failed')) return false;
               if (labels.includes('ai-pr-opened')) return false;
               return true;
             };
@@ -55,7 +56,12 @@ jobs:
                 repo: context.repo.repo,
                 issue_number: manualInput,
               });
-              if (shouldProcess(manualIssue)) {
+              const labels = labelsOf(manualIssue);
+              if (
+                !manualIssue.pull_request &&
+                labels.includes('ai-change-request') &&
+                !labels.includes('ai-in-progress')
+              ) {
                 unique.add(manualInput);
               }
             }
@@ -158,8 +164,12 @@ jobs:
         env:
           ISSUE_NUMBER: ${{ matrix.issue_number }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+          LLM_MODEL: ${{ vars.LLM_MODEL }}
+          LLM_API_BASE_URL: ${{ vars.LLM_API_BASE_URL }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_MODEL: ${{ vars.OPENROUTER_MODEL }}
+          OPENROUTER_HTTP_REFERER: ${{ vars.OPENROUTER_HTTP_REFERER }}
+          OPENROUTER_X_TITLE: ${{ vars.OPENROUTER_X_TITLE }}
 
       - name: Build for verification
         if: ${{ steps.generate.outputs.changed == 'true' }}

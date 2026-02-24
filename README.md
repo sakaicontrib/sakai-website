@@ -39,8 +39,13 @@ This repository includes GitHub Actions that let non-technical contributors open
 
 ### Required Repo Configuration
 
-1. Add secret `OPENAI_API_KEY`.
-2. Optional repo variable `OPENAI_MODEL` (default in script is `gpt-4.1`).
+1. Add repo secret `OPENROUTER_API_KEY`.
+2. Optional OpenRouter variables:
+   - `LLM_MODEL` (global override)
+   - `LLM_API_BASE_URL` (only needed for custom OpenRouter-compatible endpoints)
+   - `OPENROUTER_MODEL` (default: `moonshotai/kimi-k2.5`)
+   - `OPENROUTER_HTTP_REFERER`
+   - `OPENROUTER_X_TITLE`
 3. Optional repo variable `AI_AUTOMERGE_DAYS` (default is `7`).
 4. Recommended: enable branch protections/required checks so unsafe PRs cannot merge.
 
@@ -51,3 +56,4 @@ This repository includes GitHub Actions that let non-technical contributors open
   - `ai-failed` is applied on workflow failure.
 - The patch generator reads repository text files and asks the model for a unified diff.
 - The workflow uses `GITHUB_TOKEN` to open PRs and merge eligible PRs.
+- The generator is configured for OpenRouter chat-completions.
