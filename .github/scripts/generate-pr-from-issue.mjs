@@ -59,6 +59,45 @@ function stripFences(input) {
   return fenced ? fenced[1] : trimmed;
 }
 
+function extractMessageContent(payload) {
+  const firstChoice = payload?.choices?.[0];
+  const content = firstChoice?.message?.content ?? firstChoice?.text ?? "";
+
+  if (typeof content === "string") {
+    return content;
+  }
+
+  if (Array.isArray(content)) {
+    return content
+      .map((part) => {
+        if (typeof part === "string") return part;
+        if (typeof part?.text === "string") return part.text;
+        if (typeof part?.content === "string") return part.content;
+        return "";
+      })
+      .join("\n")
+      .trim();
+  }
+
+  return "";
+}
+
+function parseJsonLoose(input) {
+  const trimmed = String(input || "").trim();
+  const unfenced = trimmed.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i)?.[1] || trimmed;
+
+  try {
+    return JSON.parse(unfenced);
+  } catch {
+    const first = unfenced.indexOf("{");
+    const last = unfenced.lastIndexOf("}");
+    if (first >= 0 && last > first) {
+      return JSON.parse(unfenced.slice(first, last + 1));
+    }
+    throw new Error("No JSON object found in model output.");
+  }
+}
+
 function setOutput(name, value) {
   const outputFile = process.env.GITHUB_OUTPUT;
   const normalized = String(value ?? "");
@@ -164,7 +203,6 @@ async function llmCompletion({ providerConfig, systemPrompt, userPrompt }) {
       model,
       temperature: 0.2,
       max_tokens: maxTokens,
-      response_format: { type: "json_object" },
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt },
@@ -177,19 +215,12 @@ async function llmCompletion({ providerConfig, systemPrompt, userPrompt }) {
     throw new Error(`LLM API ${res.status}: ${JSON.stringify(payload)}`);
   }
 
-  const content = payload?.choices?.[0]?.message?.content;
+  const content = extractMessageContent(payload);
   if (!content) {
-    throw new Error("LLM API returned no content");
+    throw new Error(`LLM API returned no content: ${JSON.stringify(payload).slice(0, 1000)}`);
   }
 
-  let parsed;
-  try {
-    parsed = JSON.parse(content);
-  } catch (error) {
-    throw new Error(`Model output is not valid JSON: ${error}`);
-  }
-
-  return parsed;
+  return parseJsonLoose(content);
 }
 
 async function main() {
