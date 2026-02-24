@@ -58,7 +58,6 @@ jobs:
               const labels = labelsOf(manualIssue);
               if (
                 !manualIssue.pull_request &&
-                !labels.includes('ai-failed') &&
                 !labels.includes('ai-in-progress')
               ) {
                 unique.add(manualInput);
