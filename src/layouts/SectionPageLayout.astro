@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
+import LanguageSwitcher from "../components/LanguageSwitcher.astro";
 
 interface Props {
   title: string;
@@ -40,12 +41,15 @@ const links = [
           ))}
         </div>
 
-        <a
-          href={withBase("/try-sakai-lms-free")}
-          class="sans hard-border block-shadow-soft bg-[var(--sakai-terracotta)] px-4 py-2 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:-translate-x-0.5 hover:-translate-y-0.5"
-        >
-          Try Sakai
-        </a>
+        <div class="flex items-center gap-3">
+          <LanguageSwitcher />
+          <a
+            href={withBase("/try-sakai-lms-free")}
+            class="sans hard-border block-shadow-soft bg-[var(--sakai-terracotta)] px-4 py-2 text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:-translate-x-0.5 hover:-translate-y-0.5"
+          >
+            Try Sakai
+          </a>
+        </div>
       </nav>
     </header>
 

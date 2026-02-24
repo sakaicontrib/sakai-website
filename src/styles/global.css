@@ -105,3 +105,59 @@ h6,
     box-shadow: 4px 4px 0 var(--sakai-black);
   }
 }
+
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--sakai-black);
+  background: var(--sakai-paper);
+  box-shadow: 3px 3px 0 var(--sakai-black);
+  overflow: hidden;
+}
+
+.lang-option {
+  border: 0;
+  background: transparent;
+  color: var(--sakai-ink);
+  padding: 0.42rem 0.58rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.lang-option + .lang-option {
+  border-left: 2px solid var(--sakai-black);
+}
+
+.lang-option:hover {
+  background: color-mix(in oklab, var(--sakai-aqua) 18%, var(--sakai-paper));
+}
+
+.lang-option.is-active {
+  background: var(--sakai-ink);
+  color: var(--sakai-paper);
+}
+
+#sakai-google-translate-root {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
