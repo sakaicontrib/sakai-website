@@ -1,7 +1,46 @@
 ---
 import SectionPageLayout from "../../layouts/SectionPageLayout.astro";
+
 const withBase = (path: string) =>
   `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
+
+const narrativeSections = [
+  {
+    title: "Introduction",
+    paragraphs: [
+      "The Sakai community is committed to ensuring core Sakai features are accessible and usable by the greatest number of potential users, including individuals with disabilities.",
+      "Sakai targets WCAG 2.2 Level A and AA success criteria and uses WAI-ARIA patterns to support existing and emerging assistive technologies."
+    ]
+  },
+  {
+    title: "Historical Context",
+    paragraphs: [
+      "Sakai's open-source model enables a direct feedback loop with faculty, staff, and students, so accessibility priorities are grounded in real teaching and learning needs.",
+      "As an Apereo project, Sakai has sustained a community model where users and contributors shape practical improvements over time."
+    ]
+  },
+  {
+    title: "Investment And Commitment",
+    paragraphs: [
+      "Accessibility is not treated as a one-time deliverable. Sakai teams perform recurring evaluation and issue follow-through across release cycles.",
+      "The effort combines dedicated accessibility leadership, contributor QA work, and partner collaboration including Vision-Aid and Accessiversity."
+    ]
+  },
+  {
+    title: "Community Integration",
+    paragraphs: [
+      "Accessibility contributors are embedded in QA triage, core calls, and working-group collaboration so accessibility concerns are surfaced early and resolved continuously.",
+      "This model supports rapid feedback between developers, testers, and institutional practitioners."
+    ]
+  },
+  {
+    title: "Authenticity And Transparency",
+    paragraphs: [
+      "Sakai publishes accessibility findings and VPAT reports and treats results as inputs for ongoing backlog and release work.",
+      "The goal is practical conformance outcomes that institutions can verify and rely on."
+    ]
+  }
+];
 
 const toolsTested = [
   "Gateway/portal interface and Profile",
@@ -22,38 +61,32 @@ const methods = [
 
 <SectionPageLayout
   title="Accessibility Strategy | Sakai LMS"
-  description="Sakai's accessibility strategy, process, and reporting model across Sakai 22 and Sakai 23 VPAT cycles."
+  description="Sakai accessibility strategy and VPAT process details across major Sakai releases."
   kicker="Accessibility"
   heading="Accessibility Strategy"
 >
   <article class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
     <p class="text-lg leading-relaxed text-[var(--sakai-ink)]">
-      The Sakai community is committed to ensuring core features are accessible and usable by the greatest number of users,
-      including individuals with disabilities. Sakai targets WCAG 2.2 Level A/AA conformance and integrates accessibility into
-      design, QA, governance, and release management.
+      Sakai's accessibility strategy is community-sourced, continuously tested, and publicly reported. Accessibility work is integrated
+      into design, QA, governance, and release operations.
     </p>
   </article>
 
-  <section class="grid gap-4 md:grid-cols-2">
-    <article class="hard-border block-shadow-soft bg-white p-5">
-      <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Historical Context</h2>
-      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
-        Sakai's open-source model creates a direct feedback loop with educators and students.
-        Accessibility priorities are shaped by institutions and users working inside real teaching and learning environments.
-      </p>
-    </article>
-
-    <article class="hard-border block-shadow-soft bg-white p-5">
-      <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Investment And Commitment</h2>
-      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
-        Sakai treats accessibility as continuous work. The community relies on embedded accessibility leadership,
-        partners such as Vision-Aid and Accessiversity, and ongoing contributor collaboration across institutions.
-      </p>
-    </article>
+  <section class="grid gap-3">
+    {narrativeSections.map((section) => (
+      <details class="hard-border block-shadow-soft bg-white p-4" open>
+        <summary class="sans cursor-pointer text-lg font-black uppercase text-[var(--sakai-ink)]">{section.title}</summary>
+        <div class="mt-3 grid gap-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+          {section.paragraphs.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+      </details>
+    ))}
   </section>
 
   <section class="hard-border block-shadow-soft bg-white p-6">
-    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Tools/Features Tested</h2>
+    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Tools And Features Tested</h2>
     <ul class="mt-4 grid gap-2 text-sm text-[var(--sakai-ink-soft)] md:grid-cols-2">
       {toolsTested.map((item) => (
         <li class="hard-border bg-[var(--sakai-paper)] px-3 py-2">{item}</li>
@@ -71,33 +104,35 @@ const methods = [
   </section>
 
   <section class="grid gap-4 md:grid-cols-2">
-    <article class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-5 text-[var(--sakai-paper)]">
-      <h2 class="sans text-xl font-black uppercase">Sakai 22 Results</h2>
-      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-paper)]/90">
-        2,853 test cases were performed across 23 tools and features. 91 initial failures were identified,
-        with nearly 97% first-pass success for keyboard and screen-reader tasks.
-      </p>
-      <a href="https://www.sakailms.org/_files/ugd/7ada9b_ff99f704852545eaa05d37511b7b54ee.pdf" class="sans mt-4 inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
-        Sakai 22 VPAT (PDF)
-      </a>
-    </article>
+    <details class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-5 text-[var(--sakai-paper)]" open>
+      <summary class="sans cursor-pointer text-xl font-black uppercase">Sakai 22 VPAT Process And Results</summary>
+      <div class="mt-3 grid gap-3 text-sm leading-relaxed text-[var(--sakai-paper)]/90">
+        <p>2,853 test cases were performed across 23 tools and features, with 91 initial failures and nearly 97% first-pass success for keyboard and screen-reader tasks.</p>
+        <p>Findings were compiled from automated and manual testing, false positives were filtered, and Jira issues were tracked for fix and backport workflows.</p>
+        <p>The Sakai 22 ACR is based on VPAT 2.4 INTL and includes WCAG, Section 508, and EN 301 549 references.</p>
+        <a href="https://www.sakailms.org/_files/ugd/7ada9b_ff99f704852545eaa05d37511b7b54ee.pdf" class="sans text-xs font-bold uppercase tracking-[0.1em] underline">
+          Sakai 22 VPAT (PDF)
+        </a>
+      </div>
+    </details>
 
-    <article class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-5 text-[var(--sakai-paper)]">
-      <h2 class="sans text-xl font-black uppercase">Sakai 23 Results</h2>
-      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-paper)]/90">
-        5,096 test cases were performed across 29 tools and features. 90 initial failures were identified,
-        with over 98% first-pass success for keyboard and screen-reader tasks.
-      </p>
-      <a href="https://www.sakailms.org/_files/ugd/7ada9b_b06542c9041c42de8a0525f355ee1aea.pdf" class="sans mt-4 inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
-        Sakai 23 VPAT (PDF)
-      </a>
-    </article>
+    <details class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-5 text-[var(--sakai-paper)]" open>
+      <summary class="sans cursor-pointer text-xl font-black uppercase">Sakai 23 VPAT Process And Results</summary>
+      <div class="mt-3 grid gap-3 text-sm leading-relaxed text-[var(--sakai-paper)]/90">
+        <p>5,096 test cases were performed across 29 tools and features, with 90 initial failures and more than 98% first-pass success.</p>
+        <p>The Sakai 23 cycle expanded UI modernization and testing depth, including additional manual and automated coverage and Sakai Plus evaluation.</p>
+        <p>The Sakai 23 ACR is based on VPAT 2.5 International and includes WCAG 2.2 conformance coverage.</p>
+        <a href="https://www.sakailms.org/_files/ugd/7ada9b_b06542c9041c42de8a0525f355ee1aea.pdf" class="sans text-xs font-bold uppercase tracking-[0.1em] underline">
+          Sakai 23 VPAT (PDF)
+        </a>
+      </div>
+    </details>
   </section>
 
   <section class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
-    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">More Accessibility Information</h2>
+    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Contact And Related Pages</h2>
     <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
-      For additional details on ongoing accessibility work and reporting, contact
+      For accessibility questions and ongoing effort details, contact
       <a class="underline" href="mailto:Accessibility@SakaiLMS.org">Accessibility@SakaiLMS.org</a>.
     </p>
     <div class="mt-4 flex flex-wrap gap-3">

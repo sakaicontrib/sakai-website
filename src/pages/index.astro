@@ -104,6 +104,7 @@ const withBase = (path: string) =>
           <a href={withBase("/sakai-lms-features")} class="hover:text-[var(--sakai-terracotta)]">Features</a>
           <a href={withBase("/sakai-lms-community")} class="hover:text-[var(--sakai-terracotta)]">Community</a>
           <a href={withBase("/sakaiplus")} class="hover:text-[var(--sakai-terracotta)]">Sakai Plus</a>
+          <a href={withBase("/releases")} class="hover:text-[var(--sakai-terracotta)]">Releases</a>
           <a href={withBase("/resources")} class="hover:text-[var(--sakai-terracotta)]">Resources</a>
         </div>
 
@@ -320,7 +321,7 @@ const withBase = (path: string) =>
         <p class="mt-5 max-w-3xl text-lg leading-relaxed text-[var(--sakai-ink)]">
           Use these direct paths for technical evaluation, implementation planning, and engagement with the Sakai open-source community.
         </p>
-        <div class="mt-6 grid gap-4 md:grid-cols-3">
+        <div class="mt-6 grid gap-4 md:grid-cols-4">
           <a href={withBase("/try-sakai-lms-free")} class="hard-border block-shadow-soft bg-white p-4 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
             <p class="sans text-sm font-extrabold uppercase tracking-[0.08em] text-[var(--sakai-terracotta)]">Try Sakai</p>
             <p class="mt-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Request a trial and evaluate your migration fit.</p>
@@ -328,6 +329,10 @@ const withBase = (path: string) =>
           <a href={withBase("/resources")} class="hard-border block-shadow-soft bg-white p-4 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
             <p class="sans text-sm font-extrabold uppercase tracking-[0.08em] text-[var(--sakai-terracotta)]">Resources</p>
             <p class="mt-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Documentation, stories, and community guidance.</p>
+          </a>
+          <a href={withBase("/releases")} class="hard-border block-shadow-soft bg-white p-4 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+            <p class="sans text-sm font-extrabold uppercase tracking-[0.08em] text-[var(--sakai-terracotta)]">Releases</p>
+            <p class="mt-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Current version lines, technical notes, and source distribution links.</p>
           </a>
           <a href="https://github.com/sakaiproject/sakai" class="hard-border block-shadow-soft bg-white p-4 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
             <p class="sans text-sm font-extrabold uppercase tracking-[0.08em] text-[var(--sakai-terracotta)]">GitHub</p>
@@ -346,6 +351,7 @@ const withBase = (path: string) =>
 
         <nav class="sans flex flex-wrap gap-4 text-xs font-bold uppercase tracking-[0.12em] text-[var(--sakai-ink)]">
           <a href="https://github.com/sakaiproject/sakai" class="hover:text-[var(--sakai-terracotta)]">GitHub</a>
+          <a href={withBase("/releases")} class="hover:text-[var(--sakai-terracotta)]">Releases</a>
           <a href={withBase("/sakai-lms-community")} class="hover:text-[var(--sakai-terracotta)]">Community</a>
           <a href={withBase("/resources")} class="hover:text-[var(--sakai-terracotta)]">Resources</a>
           <a href={withBase("/accessibility")} class="hover:text-[var(--sakai-terracotta)]">Accessibility</a>
