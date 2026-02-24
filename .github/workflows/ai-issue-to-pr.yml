@@ -1,0 +1,319 @@
+name: AI Issue To PR
+
+on:
+  issues:
+    types: [opened, edited, reopened, labeled]
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: Optional issue number to process immediately
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      issue_numbers: ${{ steps.discover.outputs.issue_numbers }}
+    steps:
+      - name: Discover issues to process
+        id: discover
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labelsOf = (issue) => (issue.labels || []).map((l) => typeof l === 'string' ? l : l.name);
+            const shouldProcess = (issue) => {
+              if (issue.pull_request) return false;
+              const labels = labelsOf(issue);
+              if (!labels.includes('ai-change-request')) return false;
+              if (labels.includes('ai-in-progress')) return false;
+              if (labels.includes('ai-pr-opened')) return false;
+              return true;
+            };
+
+            const unique = new Set();
+            const event = context.eventName;
+            const manualInput = Number(context.payload.inputs?.issue_number || 0);
+
+            if (event === 'issues') {
+              const issue = context.payload.issue;
+              if (issue && shouldProcess(issue)) {
+                unique.add(issue.number);
+              }
+            }
+
+            if (manualInput > 0) {
+              const { data: manualIssue } = await github.rest.issues.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: manualInput,
+              });
+              if (shouldProcess(manualIssue)) {
+                unique.add(manualInput);
+              }
+            }
+
+            if (event === 'schedule' || event === 'workflow_dispatch') {
+              const issues = await github.paginate(github.rest.issues.listForRepo, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                labels: 'ai-change-request',
+                per_page: 100,
+              });
+
+              for (const issue of issues) {
+                if (shouldProcess(issue)) {
+                  unique.add(issue.number);
+                }
+              }
+            }
+
+            const issueNumbers = [...unique];
+            core.info(`Issues queued: ${issueNumbers.join(', ') || 'none'}`);
+            core.setOutput('issue_numbers', JSON.stringify(issueNumbers));
+
+  process:
+    runs-on: ubuntu-latest
+    needs: discover
+    if: ${{ needs.discover.outputs.issue_numbers != '[]' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        issue_number: ${{ fromJSON(needs.discover.outputs.issue_numbers) }}
+    steps:
+      - name: Ensure workflow labels exist
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labels = [
+              { name: 'ai-change-request', color: '1d76db', description: 'Issue submitted for AI implementation' },
+              { name: 'ai-in-progress', color: 'fbca04', description: 'Automation is currently processing this issue' },
+              { name: 'ai-pr-opened', color: '0e8a16', description: 'Automation created a pull request for this issue' },
+              { name: 'ai-failed', color: 'b60205', description: 'Automation failed to process this issue' },
+              { name: 'ai-generated', color: '5319e7', description: 'PR contains AI-generated changes' },
+              { name: 'ai-automerge-candidate', color: 'c2e0c6', description: 'Eligible for inactivity-based auto-merge' },
+            ];
+
+            for (const label of labels) {
+              try {
+                await github.rest.issues.createLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ...label,
+                });
+              } catch (error) {
+                if (error.status !== 422) {
+                  throw error;
+                }
+              }
+            }
+
+      - name: Mark issue in progress
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: Number('${{ matrix.issue_number }}'),
+              labels: ['ai-in-progress'],
+            });
+
+            try {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: Number('${{ matrix.issue_number }}'),
+                name: 'ai-failed',
+              });
+            } catch (error) {
+              if (error.status !== 404) {
+                throw error;
+              }
+            }
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate changes from issue
+        id: generate
+        run: node .github/scripts/generate-pr-from-issue.mjs
+        env:
+          ISSUE_NUMBER: ${{ matrix.issue_number }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+
+      - name: Build for verification
+        if: ${{ steps.generate.outputs.changed == 'true' }}
+        run: npm run build
+
+      - name: Create or update pull request
+        id: cpr
+        if: ${{ steps.generate.outputs.changed == 'true' }}
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.generate.outputs.branch_name }}
+          base: ${{ github.event.repository.default_branch || 'main' }}
+          title: ${{ steps.generate.outputs.pr_title }}
+          body: |
+            ${{ steps.generate.outputs.pr_body }}
+
+            Source issue: #${{ matrix.issue_number }}
+          commit-message: ${{ steps.generate.outputs.commit_message }}
+          labels: |
+            ai-generated
+            ai-automerge-candidate
+          draft: false
+          delete-branch: false
+
+      - name: Mark issue as PR opened
+        if: ${{ steps.cpr.outputs.pull-request-number != '' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = Number('${{ matrix.issue_number }}');
+            const prNumber = Number('${{ steps.cpr.outputs.pull-request-number }}');
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              labels: ['ai-pr-opened'],
+            });
+
+            try {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                name: 'ai-in-progress',
+              });
+            } catch (error) {
+              if (error.status !== 404) {
+                throw error;
+              }
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: `Opened/updated PR #${prNumber} for this request.`,
+            });
+
+      - name: Mark issue as no-op
+        if: ${{ steps.generate.outputs.changed != 'true' }}
+        uses: actions/github-script@v7
+        env:
+          NO_CHANGE_REASON: ${{ steps.generate.outputs.no_change_reason }}
+        with:
+          script: |
+            const issueNumber = Number('${{ matrix.issue_number }}');
+            const reason = process.env.NO_CHANGE_REASON || 'No reason provided.';
+
+            try {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                name: 'ai-in-progress',
+              });
+            } catch (error) {
+              if (error.status !== 404) {
+                throw error;
+              }
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: `Automation did not produce a code change. ${reason}`,
+            });
+
+      - name: Mark issue for manual follow-up when PR is missing
+        if: ${{ steps.generate.outputs.changed == 'true' && steps.cpr.outputs.pull-request-number == '' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = Number('${{ matrix.issue_number }}');
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              labels: ['ai-failed'],
+            });
+
+            try {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                name: 'ai-in-progress',
+              });
+            } catch (error) {
+              if (error.status !== 404) {
+                throw error;
+              }
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: 'Changes were generated, but no PR was created. Please inspect the workflow logs.',
+            });
+
+      - name: Mark issue as failed
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumber = Number('${{ matrix.issue_number }}');
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              labels: ['ai-failed'],
+            });
+
+            try {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                name: 'ai-in-progress',
+              });
+            } catch (error) {
+              if (error.status !== 404) {
+                throw error;
+              }
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: 'Automation failed for this issue. Check the workflow run logs and rerun after fixes.',
+            });

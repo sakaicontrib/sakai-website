@@ -1,0 +1,70 @@
+---
+import SectionPageLayout from "../../layouts/SectionPageLayout.astro";
+const withBase = (path: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
+
+const institutionExamples = [
+  "University of Dayton",
+  "University of Michigan",
+  "Western University",
+  "Marist University",
+  "Nagoya University",
+  "University of Murcia",
+  "Northwest State"
+];
+---
+
+<SectionPageLayout
+  title="Member Institutions | Sakai Community"
+  description="Sakai member institutions collaborate to advance open-source teaching and learning based on real institutional needs."
+  kicker="Sakai Community"
+  heading="Member Institutions"
+>
+  <article class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+    <p class="text-lg leading-relaxed text-[var(--sakai-ink)]">
+      Member institutions work together to innovate and advance Sakai based on their own teaching and learning needs.
+      This community-driven process means institutions can enhance Sakai directly or work with commercial affiliates
+      to create integrations, develop new tools, and deliver new functionality for digital learning environments.
+    </p>
+  </article>
+
+  <section class="grid gap-4 md:grid-cols-2">
+    <article class="hard-border block-shadow-soft bg-white p-5">
+      <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">Community Leadership Connection</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+        Institutions participate in governance through the Sakai Project Management Committee (PMC), working with the Apereo Foundation
+        in an open and transparent process for strategic oversight and product direction.
+      </p>
+      <a href={withBase("/sakai-lms-community")} class="sans mt-4 inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
+        Back To Community
+      </a>
+    </article>
+
+    <article class="hard-border block-shadow-soft bg-white p-5">
+      <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">Institution Examples</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+        The legacy community pages highlight broad participation across institutions and affiliates.
+      </p>
+      <ul class="mt-4 grid gap-2 text-sm text-[var(--sakai-ink-soft)] sm:grid-cols-2">
+        {institutionExamples.map((item) => (
+          <li class="hard-border bg-[var(--sakai-paper)] px-2 py-1">{item}</li>
+        ))}
+      </ul>
+    </article>
+  </section>
+
+  <section class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-6 text-[var(--sakai-paper)]">
+    <h2 class="sans text-2xl font-black uppercase">Get Involved</h2>
+    <p class="mt-2 text-sm text-[var(--sakai-paper)]/90">
+      Join the Sakai community to participate in roadmap discussion, implementation practice sharing, and collaborative feature development.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <a href="https://sakaiproject.atlassian.net/wiki/spaces/CONF/overview?mode=global" class="sans hard-border bg-[var(--sakai-paper)] px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[var(--sakai-ink)]">
+        Community Wiki
+      </a>
+      <a href={withBase("/resources")} class="sans hard-border bg-[var(--sakai-paper)]/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[var(--sakai-paper)]">
+        Resource Hub
+      </a>
+    </div>
+  </section>
+</SectionPageLayout>

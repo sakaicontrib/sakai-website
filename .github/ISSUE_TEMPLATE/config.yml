@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Sakai Community Discussion
+    url: https://github.com/sakaiproject/sakai/discussions
+    about: Ask broad product questions or discuss ideas with the community.

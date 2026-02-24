@@ -1,5 +1,7 @@
 ---
 import SectionPageLayout from "../layouts/SectionPageLayout.astro";
+const withBase = (path: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
 ---
 
 <SectionPageLayout
@@ -26,13 +28,21 @@ import SectionPageLayout from "../layouts/SectionPageLayout.astro";
       <h2 class="sans text-lg font-black uppercase text-[var(--sakai-ink)]">Accessibility Working Group</h2>
       <p class="mt-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Join discussions and ongoing accessibility efforts.</p>
     </a>
-    <a href="https://www.sakailms.org/accessibility/accessibility-strategy" class="hard-border block-shadow-soft bg-white p-5">
+    <a href={withBase("/accessibility/accessibility-strategy")} class="hard-border block-shadow-soft bg-white p-5">
       <h2 class="sans text-lg font-black uppercase text-[var(--sakai-ink)]">Accessibility Strategy</h2>
       <p class="mt-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Review Sakai's strategy and design goals.</p>
     </a>
-    <a href="https://www.sakailms.org/accessibility/vpat" class="hard-border block-shadow-soft bg-white p-5">
+    <a href={withBase("/accessibility/vpat")} class="hard-border block-shadow-soft bg-white p-5">
       <h2 class="sans text-lg font-black uppercase text-[var(--sakai-ink)]">Sakai VPAT</h2>
       <p class="mt-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Access current VPAT information for Sakai.</p>
     </a>
+  </section>
+
+  <section class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-6 text-[var(--sakai-paper)]">
+    <h2 class="sans text-2xl font-black uppercase">Accessibility In Practice</h2>
+    <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-paper)]/90">
+      Sakai embeds accessibility work directly into product QA, roadmap governance, and release operations. Accessibility testing is ongoing,
+      community-led, and paired with public reporting through strategy and VPAT documentation.
+    </p>
   </section>
 </SectionPageLayout>

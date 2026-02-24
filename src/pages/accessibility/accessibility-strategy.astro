@@ -1,0 +1,108 @@
+---
+import SectionPageLayout from "../../layouts/SectionPageLayout.astro";
+const withBase = (path: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
+
+const toolsTested = [
+  "Gateway/portal interface and Profile",
+  "Administration workspace, Sites, Site Info, Resources",
+  "Assignments, Gradebook, Lessons, Rubrics, Tests & Quizzes",
+  "Calendar, Chat Room, Commons, Discussions/Forums, Drop Box, Polls, Statistics, Syllabus",
+  "Sakai Plus (23.x testing)"
+];
+
+const methods = [
+  "Keyboard-only and screen-reader testing",
+  "JAWS + Chrome, JAWS + Edge, NVDA + Firefox, VoiceOver + Safari",
+  "Automated scans with AXE Pro and SortSite",
+  "Manual verification by accessibility specialists and sighted QA team members",
+  "Screen magnification and contrast/spacing checks"
+];
+---
+
+<SectionPageLayout
+  title="Accessibility Strategy | Sakai LMS"
+  description="Sakai's accessibility strategy, process, and reporting model across Sakai 22 and Sakai 23 VPAT cycles."
+  kicker="Accessibility"
+  heading="Accessibility Strategy"
+>
+  <article class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+    <p class="text-lg leading-relaxed text-[var(--sakai-ink)]">
+      The Sakai community is committed to ensuring core features are accessible and usable by the greatest number of users,
+      including individuals with disabilities. Sakai targets WCAG 2.2 Level A/AA conformance and integrates accessibility into
+      design, QA, governance, and release management.
+    </p>
+  </article>
+
+  <section class="grid gap-4 md:grid-cols-2">
+    <article class="hard-border block-shadow-soft bg-white p-5">
+      <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Historical Context</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+        Sakai's open-source model creates a direct feedback loop with educators and students.
+        Accessibility priorities are shaped by institutions and users working inside real teaching and learning environments.
+      </p>
+    </article>
+
+    <article class="hard-border block-shadow-soft bg-white p-5">
+      <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Investment And Commitment</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+        Sakai treats accessibility as continuous work. The community relies on embedded accessibility leadership,
+        partners such as Vision-Aid and Accessiversity, and ongoing contributor collaboration across institutions.
+      </p>
+    </article>
+  </section>
+
+  <section class="hard-border block-shadow-soft bg-white p-6">
+    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Tools/Features Tested</h2>
+    <ul class="mt-4 grid gap-2 text-sm text-[var(--sakai-ink-soft)] md:grid-cols-2">
+      {toolsTested.map((item) => (
+        <li class="hard-border bg-[var(--sakai-paper)] px-3 py-2">{item}</li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="hard-border block-shadow-soft bg-white p-6">
+    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Testing Methods</h2>
+    <ul class="mt-4 grid gap-2 text-sm text-[var(--sakai-ink-soft)] md:grid-cols-2">
+      {methods.map((item) => (
+        <li class="hard-border bg-[var(--sakai-paper)] px-3 py-2">{item}</li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="grid gap-4 md:grid-cols-2">
+    <article class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-5 text-[var(--sakai-paper)]">
+      <h2 class="sans text-xl font-black uppercase">Sakai 22 Results</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-paper)]/90">
+        2,853 test cases were performed across 23 tools and features. 91 initial failures were identified,
+        with nearly 97% first-pass success for keyboard and screen-reader tasks.
+      </p>
+      <a href="https://www.sakailms.org/_files/ugd/7ada9b_ff99f704852545eaa05d37511b7b54ee.pdf" class="sans mt-4 inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
+        Sakai 22 VPAT (PDF)
+      </a>
+    </article>
+
+    <article class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-5 text-[var(--sakai-paper)]">
+      <h2 class="sans text-xl font-black uppercase">Sakai 23 Results</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-paper)]/90">
+        5,096 test cases were performed across 29 tools and features. 90 initial failures were identified,
+        with over 98% first-pass success for keyboard and screen-reader tasks.
+      </p>
+      <a href="https://www.sakailms.org/_files/ugd/7ada9b_b06542c9041c42de8a0525f355ee1aea.pdf" class="sans mt-4 inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
+        Sakai 23 VPAT (PDF)
+      </a>
+    </article>
+  </section>
+
+  <section class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">More Accessibility Information</h2>
+    <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+      For additional details on ongoing accessibility work and reporting, contact
+      <a class="underline" href="mailto:Accessibility@SakaiLMS.org">Accessibility@SakaiLMS.org</a>.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <a href={withBase("/accessibility/vpat")} class="sans hard-border bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[var(--sakai-ink)]">VPAT Reports</a>
+      <a href={withBase("/accessibility")} class="sans hard-border bg-[var(--sakai-ink)] px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[var(--sakai-paper)]">Accessibility Home</a>
+    </div>
+  </section>
+</SectionPageLayout>

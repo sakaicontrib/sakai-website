@@ -1,43 +1,53 @@
-# Astro Starter Kit: Minimal
+# Sakai Website (Astro + Tailwind)
 
-```sh
-npm create astro@latest -- --template minimal
+Modern rebuild of the Sakai LMS website.
+
+## Local Development
+
+```bash
+npm ci
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Build:
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```bash
+npm run build
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## AI Issue-to-PR Workflow
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+This repository includes GitHub Actions that let non-technical contributors open an issue and get an AI-generated pull request.
 
-Any static assets, like images, can be placed in the `public/` directory.
+### User Flow
 
-## 🧞 Commands
+1. Open **AI Change Request** issue template.
+2. Automation reads the issue and generates a patch with an LLM.
+3. A PR is opened with labels `ai-generated` and `ai-automerge-candidate`.
+4. Maintainers can review/merge manually anytime.
+5. If no human comments/reviews occur for 7 days, automation attempts to auto-merge.
 
-All commands are run from the root of the project, from a terminal:
+### Workflows
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- [`.github/workflows/ai-issue-to-pr.yml`](.github/workflows/ai-issue-to-pr.yml)
+  - Triggers on issue activity and every 30 minutes.
+  - Processes open issues with label `ai-change-request`.
+  - Runs build verification before opening/updating PRs.
+- [`.github/workflows/auto-merge-ai-prs.yml`](.github/workflows/auto-merge-ai-prs.yml)
+  - Runs daily.
+  - Merges open PRs labeled `ai-automerge-candidate` when inactive for configured days.
 
-## 👀 Want to learn more?
+### Required Repo Configuration
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+1. Add secret `OPENAI_API_KEY`.
+2. Optional repo variable `OPENAI_MODEL` (default in script is `gpt-4.1`).
+3. Optional repo variable `AI_AUTOMERGE_DAYS` (default is `7`).
+4. Recommended: enable branch protections/required checks so unsafe PRs cannot merge.
+
+### Notes
+
+- Label lifecycle on issues:
+  - `ai-change-request` -> `ai-in-progress` -> `ai-pr-opened`
+  - `ai-failed` is applied on workflow failure.
+- The patch generator reads repository text files and asks the model for a unified diff.
+- The workflow uses `GITHUB_TOKEN` to open PRs and merge eligible PRs.

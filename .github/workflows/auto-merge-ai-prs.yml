@@ -1,0 +1,27 @@
+name: Auto Merge Quiet AI PRs
+
+on:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Auto-merge inactive AI PRs
+        run: node .github/scripts/auto-merge-stale-ai-prs.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          REQUIRED_LABEL: ai-automerge-candidate
+          INACTIVITY_DAYS: ${{ vars.AI_AUTOMERGE_DAYS || 7 }}
+          MERGE_METHOD: squash

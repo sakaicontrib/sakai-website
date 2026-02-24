@@ -1,0 +1,51 @@
+---
+import SectionPageLayout from "../../layouts/SectionPageLayout.astro";
+const withBase = (path: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
+
+const reports = [
+  {
+    version: "Sakai 21",
+    href: "https://www.sakailms.org/_files/ugd/7ada9b_55c341f04b884ed6af7417e3d5aa1f4b.pdf"
+  },
+  {
+    version: "Sakai 22",
+    href: "https://www.sakailms.org/_files/ugd/7ada9b_ff99f704852545eaa05d37511b7b54ee.pdf"
+  },
+  {
+    version: "Sakai 23",
+    href: "https://www.sakailms.org/_files/ugd/7ada9b_b06542c9041c42de8a0525f355ee1aea.pdf"
+  }
+];
+---
+
+<SectionPageLayout
+  title="VPAT Reports | Sakai LMS"
+  description="Voluntary Product Accessibility Template (VPAT) reports for Sakai 21, 22, and 23."
+  kicker="Accessibility"
+  heading="Voluntary Product Accessibility Template (VPAT)"
+>
+  <article class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Compliance Reports</h2>
+    <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+      Sakai provides Voluntary Product Accessibility Template (VPAT) reports for recent major versions.
+    </p>
+  </article>
+
+  <section class="grid gap-4 md:grid-cols-3">
+    {reports.map((report) => (
+      <a href={report.href} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+        <h3 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">{report.version}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Download VPAT PDF</p>
+      </a>
+    ))}
+  </section>
+
+  <section class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-6 text-[var(--sakai-paper)]">
+    <h2 class="sans text-2xl font-black uppercase">Related Accessibility Pages</h2>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <a href={withBase("/accessibility")} class="sans hard-border bg-[var(--sakai-paper)] px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[var(--sakai-ink)]">Accessibility Home</a>
+      <a href={withBase("/accessibility/accessibility-strategy")} class="sans hard-border bg-[var(--sakai-paper)]/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[var(--sakai-paper)]">Accessibility Strategy</a>
+    </div>
+  </section>
+</SectionPageLayout>

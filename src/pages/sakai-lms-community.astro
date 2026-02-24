@@ -1,5 +1,7 @@
 ---
 import SectionPageLayout from "../layouts/SectionPageLayout.astro";
+const withBase = (path: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
 
 const affiliates = [
   {
@@ -21,6 +23,28 @@ const affiliates = [
     href: "https://www.edf.global"
   }
 ];
+
+const pmcMembers = [
+  "David Bauer, University of Dayton",
+  "Noah Botimer, University of Michigan",
+  "Adrian Fish, Learning Experiences",
+  "Shawn Foster, Western University",
+  "Wilma Hodges, Red Willow Solutions, LLC and Sakai Community Coordinator",
+  "Dede Hourican, Marist University",
+  "Matthew Jones, University of Michigan and Learning Experiences",
+  "Kunal Jaykam, Learning Experiences",
+  "Shoji Kajita, Nagoya University",
+  "Chris Knapp, Knapp Strategic and Accessiversity",
+  "Patrick Masson, Apereo Foundation",
+  "Earle Nietzel, Longsight and Sakai Release Manager",
+  "Sam Ottenhoff, Longsight Inc",
+  "Juan Jose Merono Sanchez, University of Murcia",
+  "Andrea Schmidt, Learning Experiences",
+  "Christina Schwiebert, Northwest State",
+  "Dr. Charles Severance, University of Michigan",
+  "Steve Swinsburg, Flying Kite",
+  "Joshua Wilson, Flywheel Strategies"
+];
 ---
 
 <SectionPageLayout
@@ -36,6 +60,24 @@ const affiliates = [
     </p>
   </article>
 
+  <section class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-6 text-[var(--sakai-paper)]">
+    <p class="sans text-xs font-black uppercase tracking-[0.1em] text-[var(--sakai-aqua)]">Latest PMC Update</p>
+    <h2 class="sans mt-2 text-2xl font-black uppercase">Andrea Schmidt Elected To Sakai PMC</h2>
+    <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-paper)]/90">
+      Andrea Schmidt (Learning Experiences) is the newest elected member of the Sakai Project Management Committee (PMC).
+      The PMC gets involved when broader project decisions are needed around Sakai direction or Apereo-backed resource use.
+    </p>
+    <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-paper)]/90">
+      Andrea serves as Sakai QA Lead and brings more than two decades of technical quality experience. She has contributed to
+      Sakai QA since 2017 and has led global QA coordination since August 2022, including weekly QA facilitation, regression
+      planning, and Jira verification across releases.
+    </p>
+    <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-paper)]/90">
+      PMC membership reflects sustained contribution and commitment to community goals. Most day-to-day Sakai decisions are still
+      made in working groups closest to the work, with PMC engagement for significant cross-project matters.
+    </p>
+  </section>
+
   <section class="grid gap-4 md:grid-cols-2">
     <article class="hard-border block-shadow-soft bg-white p-5">
       <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Sakai Community Leadership</h2>
@@ -43,6 +85,11 @@ const affiliates = [
         The Sakai community is coordinated by the Apereo Foundation and works together to create a cutting-edge learning environment.
         The Sakai Project Management Committee (PMC) provides strategic oversight through meritocratic selection and open, consensus-based decision making.
       </p>
+      <ul class="mt-4 grid gap-2 text-xs text-[var(--sakai-ink-soft)] md:grid-cols-2">
+        {pmcMembers.map((member) => (
+          <li class="hard-border bg-[var(--sakai-paper)] px-2 py-1">{member}</li>
+        ))}
+      </ul>
       <a href="https://sakaiproject.atlassian.net/wiki/spaces/CONF/overview?mode=global" class="sans mt-4 inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
         Explore Project Wiki
       </a>
@@ -52,8 +99,9 @@ const affiliates = [
       <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Member Institutions</h2>
       <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
         Institutions collaborate on roadmap priorities based on real teaching and learning needs, making Sakai's evolution practical, transparent, and shared.
+        This community-driven model lets institutions enhance Sakai directly or partner with affiliates for integrations and new capabilities.
       </p>
-      <a href="https://www.sakailms.org/sakai-lms-community/member-institutions" class="sans mt-4 inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
+      <a href={withBase("/sakai-lms-community/member-institutions")} class="sans mt-4 inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
         View Member Institutions
       </a>
     </article>
