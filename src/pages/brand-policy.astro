@@ -1,0 +1,87 @@
+---
+import SectionPageLayout from "../layouts/SectionPageLayout.astro";
+const withBase = (path: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
+
+const logoFiles = [
+  {
+    label: "Standard Logo (PNG)",
+    href: "https://drive.google.com/open?id=1LrJ47p69eQZLYYPRTXq480SzDN4RhbVZ"
+  },
+  {
+    label: "Standard Logo (JPEG)",
+    href: "https://drive.google.com/open?id=1Ibq6NiRPQAt8UPMd35VxoTX4FGG95oo-"
+  },
+  {
+    label: "Reversed Logo (PNG)",
+    href: "https://drive.google.com/file/d/1wKJ_xnjDHoReyFLMJ6G9z-Cx3TqkbbU9/view"
+  }
+];
+
+const donts = [
+  "Alter our logo files in any way.",
+  "Display graphics in a way that implies a relationship, affiliation, or endorsement by Sakai of your product, service, or business.",
+  "Use our logo as part of your own product, business, or service name.",
+  "Combine our logo with any other graphics without written consent from Sakai.",
+  "Use Sakai logos on merchandise for sale (for example, selling t-shirts or mugs) or other commercial use.",
+  "Use Sakai as the first name in a social media handle, page, or community, or suggest affiliation with Sakai using images or logos."
+];
+---
+
+<SectionPageLayout
+  title="Brand Policy | Sakai LMS"
+  description="Official Sakai brand policy for naming, logo usage, and trademark-safe guidelines."
+  kicker="Policy"
+  heading="Brand Policy"
+>
+  <article class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Our Name</h2>
+    <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+      When you use the Sakai name, capitalize the first letter. Sakai may also be fully capitalized, as "SAKAI."
+    </p>
+  </article>
+
+  <section class="hard-border block-shadow bg-[var(--sakai-ink)] p-6 text-[var(--sakai-paper)]">
+    <h2 class="sans text-2xl font-black uppercase">Our Logo</h2>
+    <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-paper)]/90">
+      We always pair the Sakai name with the jewel logo. We use the reversed logo on darker backgrounds. The logo must stay horizontal and
+      must not be rotated, animated, distorted, or otherwise altered, and it should not be used as a pattern or background element. The
+      wordmark and jewel are in <code>#27aae1</code> (Sakai blue) or black. Please provide plenty of space around the logo.
+    </p>
+    <div class="mt-4 grid gap-3 sm:grid-cols-3">
+      {logoFiles.map((file) => (
+        <a
+          href={file.href}
+          target="_blank"
+          rel="noreferrer"
+          class="hard-border bg-[var(--sakai-paper)]/10 px-4 py-3 text-xs font-bold uppercase tracking-[0.08em] transition hover:bg-[var(--sakai-paper)] hover:text-[var(--sakai-ink)]"
+        >
+          {file.label}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="hard-border block-shadow-soft bg-white p-6">
+    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">The Fine Print</h2>
+    <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+      This is a legal reminder that the Sakai logo and wordmark are proprietary and owned by the Apereo Foundation and are protected under
+      intellectual property laws.
+    </p>
+    <a
+      href={withBase("/connect")}
+      class="sans mt-4 inline-flex hard-border bg-[var(--sakai-paper)] px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--sakai-ink)]"
+    >
+      Contact Sakai
+    </a>
+  </section>
+
+  <section class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Please Don't</h2>
+    <ul class="mt-4 grid gap-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+      {donts.map((item) => (
+        <li class="hard-border bg-white px-3 py-2">{item}</li>
+      ))}
+    </ul>
+  </section>
+</SectionPageLayout>

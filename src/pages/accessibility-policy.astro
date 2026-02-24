@@ -1,0 +1,47 @@
+---
+import SectionPageLayout from "../layouts/SectionPageLayout.astro";
+const withBase = (path: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
+---
+
+<SectionPageLayout
+  title="Accessibility Policy | Sakai LMS"
+  description="Sakai's accessibility policy and commitment to WCAG 2.2 AA standards for inclusive learning."
+  kicker="Policy"
+  heading="Accessibility Policy"
+>
+  <article class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+    <p class="text-lg leading-relaxed text-[var(--sakai-ink)]">
+      The Sakai community is committed to ensuring all core features of the Sakai project are accessible and usable by the greatest number
+      of potential users, including people with disabilities.
+    </p>
+    <p class="mt-4 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+      Sakai is developed to meet or exceed all accessibility design principles found in recognized international standards. Our goal is to
+      meet all of the W3C Web Content Accessibility Guidelines (WCAG) 2.2 Level A and AA Success Criteria. We also use emerging standards and
+      best practice design techniques (such as the WAI-ARIA Suite) that support existing and emerging adaptive technologies.
+    </p>
+  </article>
+
+  <section class="hard-border block-shadow bg-[var(--sakai-ink)] p-6 text-[var(--sakai-paper)]">
+    <h2 class="sans text-2xl font-black uppercase">Public Reporting</h2>
+    <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-paper)]/90">
+      The Sakai community regularly evaluates Sakai accessibility to ensure it meets the needs of faculty and students. Results of Sakai
+      accessibility evaluations are publicly available.
+    </p>
+  </section>
+
+  <section class="grid gap-4 md:grid-cols-3">
+    <a href="https://confluence.sakaiproject.org/display/2ACC/Accessibility+Working+Group" class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+      <h2 class="sans text-lg font-black uppercase text-[var(--sakai-ink)]">Accessibility Working Group</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Join the community group focused on accessibility priorities and progress.</p>
+    </a>
+    <a href={withBase("/accessibility/accessibility-strategy")} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+      <h2 class="sans text-lg font-black uppercase text-[var(--sakai-ink)]">Accessibility Strategy</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Read the Sakai strategy, methods, and process details.</p>
+    </a>
+    <a href={withBase("/accessibility/vpat")} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+      <h2 class="sans text-lg font-black uppercase text-[var(--sakai-ink)]">Sakai VPAT</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Download VPAT reports for recent Sakai major versions.</p>
+    </a>
+  </section>
+</SectionPageLayout>
