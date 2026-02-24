@@ -6,15 +6,15 @@ const withBase = (path: string) =>
 const reports = [
   {
     version: "Sakai 21",
-    href: "https://www.sakailms.org/_files/ugd/7ada9b_55c341f04b884ed6af7417e3d5aa1f4b.pdf"
+    href: "/pdfs/vpat/sakai-21-vpat.pdf"
   },
   {
     version: "Sakai 22",
-    href: "https://www.sakailms.org/_files/ugd/7ada9b_ff99f704852545eaa05d37511b7b54ee.pdf"
+    href: "/pdfs/vpat/sakai-22-vpat.pdf"
   },
   {
     version: "Sakai 23",
-    href: "https://www.sakailms.org/_files/ugd/7ada9b_b06542c9041c42de8a0525f355ee1aea.pdf"
+    href: "/pdfs/vpat/sakai-23-vpat.pdf"
   }
 ];
 ---
@@ -34,7 +34,7 @@ const reports = [
 
   <section class="grid gap-4 md:grid-cols-3">
     {reports.map((report) => (
-      <a href={report.href} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+      <a href={withBase(report.href)} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
         <h3 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">{report.version}</h3>
         <p class="mt-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Download VPAT PDF</p>
       </a>
