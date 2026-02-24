@@ -21,6 +21,30 @@ const resources = [
     description:
       "Watch feature walkthroughs, release highlights, and community sessions from the Sakai project.",
     href: "https://www.youtube.com/@SakaiCLE"
+  },
+  {
+    title: "Sakai News Archive",
+    description:
+      "Read community stories, roadmap notes, and legacy announcement highlights from the Sakai news feed.",
+    href: "/sakai-news"
+  },
+  {
+    title: "Sakai Events",
+    description:
+      "Browse conference sessions, event highlights, and SakaiCon recordings from recent community events.",
+    href: "/events"
+  },
+  {
+    title: "Conference Resources",
+    description:
+      "Review EDUCAUSE and conference-oriented Sakai materials published for attendees and evaluators.",
+    href: "/conference-resources"
+  },
+  {
+    title: "Connect With Sakai",
+    description:
+      "Find official channels for source code, collaboration, social updates, and community participation.",
+    href: "/connect"
   }
 ];
 ---
@@ -37,9 +61,9 @@ const resources = [
     </p>
   </article>
 
-  <section class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+  <section class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
     {resources.map((resource) => (
-      <a href={resource.href} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+      <a href={resource.href.startsWith("/") ? withBase(resource.href) : resource.href} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
         <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">{resource.title}</h2>
         <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">{resource.description}</p>
       </a>
@@ -54,6 +78,12 @@ const resources = [
       <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">Releases And Versions</h2>
       <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
         Track current Sakai release lines, source distribution links, and version-specific technical resources.
+      </p>
+    </a>
+    <a href={withBase("/videos")} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+      <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">Video Library</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+        Watch conference sessions and feature-oriented recordings from the Sakai community.
       </p>
     </a>
   </section>

@@ -1,0 +1,92 @@
+---
+import SectionPageLayout from "../layouts/SectionPageLayout.astro";
+const withBase = (path: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
+
+const communityChannels = [
+  {
+    title: "GitHub Source",
+    description: "Track development, inspect commits, and contribute code to the Sakai LMS project.",
+    href: "https://github.com/sakaiproject/sakai"
+  },
+  {
+    title: "Confluence Wiki",
+    description: "Follow planning notes, community documentation, and implementation guidance.",
+    href: "https://sakaiproject.atlassian.net/wiki/spaces/CONF/overview?mode=global"
+  },
+  {
+    title: "Sakai User Help",
+    description: "Access feature-level guides for instructors, learners, and support teams.",
+    href: "https://sakai.screenstepslive.com/s/sakai_help/m/101295"
+  },
+  {
+    title: "Sakai YouTube",
+    description: "Watch release walkthroughs, conference sessions, and recorded demos.",
+    href: "https://www.youtube.com/@SakaiCLE"
+  }
+];
+
+const socialChannels = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/sakai-lms/" },
+  { label: "Mastodon", href: "https://openedtech.social/@sakailms" },
+  { label: "X / Twitter", href: "https://twitter.com/SakaiLMS" },
+  { label: "Instagram", href: "https://www.instagram.com/sakailms" },
+  { label: "Facebook", href: "http://www.facebook.com/sakailms" }
+];
+---
+
+<SectionPageLayout
+  title="Connect | Sakai LMS"
+  description="Connect with the Sakai open-source community through project channels, documentation, source code, and social updates."
+  kicker="Connect"
+  heading="Stay Connected With Sakai"
+>
+  <article class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+    <p class="text-lg leading-relaxed text-[var(--sakai-ink)]">
+      Sakai is a collaborative open-source project. Join community channels, follow platform updates, and engage directly with the teams building and supporting Sakai.
+    </p>
+  </article>
+
+  <section class="grid gap-4 md:grid-cols-2">
+    {communityChannels.map((channel) => (
+      <a
+        href={channel.href}
+        target="_blank"
+        rel="noreferrer"
+        class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5"
+      >
+        <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">{channel.title}</h2>
+        <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">{channel.description}</p>
+      </a>
+    ))}
+  </section>
+
+  <section class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-6 text-[var(--sakai-paper)]">
+    <h2 class="sans text-2xl font-black uppercase">Social Channels</h2>
+    <p class="mt-2 text-sm text-[var(--sakai-paper)]/85">
+      Follow Sakai updates, conference announcements, and community highlights.
+    </p>
+    <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      {socialChannels.map((item) => (
+        <a href={item.href} target="_blank" rel="noreferrer" class="hard-border bg-[var(--sakai-paper)]/10 px-3 py-2 text-sm font-semibold">
+          {item.label}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="grid gap-4 md:grid-cols-3">
+    <a href={withBase("/sakai-news")} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+      <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">Sakai News</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Read announcements, roadmap updates, and community stories.</p>
+    </a>
+    <a href={withBase("/events")} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+      <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">Events</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Browse conference sessions and recent SakaiCon recordings.</p>
+    </a>
+    <a href={withBase("/try-sakai-lms-free")} class="hard-border block-shadow-soft bg-white p-5 transition hover:-translate-x-0.5 hover:-translate-y-0.5">
+      <h2 class="sans text-xl font-black uppercase text-[var(--sakai-ink)]">Try Sakai</h2>
+      <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">Evaluate Sakai through cloud-hosted and self-hosted options.</p>
+    </a>
+  </section>
+</SectionPageLayout>
