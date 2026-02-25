@@ -285,6 +285,25 @@ const withBase = (path: string) =>
             <a href="https://www.edf.global" class="font-semibold underline">EDF</a>.
           </p>
 
+          <div class="mt-5 grid gap-3 sm:grid-cols-2">
+            <a
+              href="https://github.com/sakaiproject/sakai/stargazers"
+              class="hard-border block-shadow-soft bg-white p-4 transition hover:-translate-x-0.5 hover:-translate-y-0.5"
+            >
+              <p class="sans text-xs font-black uppercase tracking-[0.1em] text-[var(--sakai-terracotta)]">GitHub Community</p>
+              <p class="sans mt-2 text-3xl font-black uppercase text-[var(--sakai-ink)]">1.2k+</p>
+              <p class="text-sm text-[var(--sakai-ink-soft)]">Stars</p>
+            </a>
+            <a
+              href="https://github.com/sakaiproject/sakai/network/members"
+              class="hard-border block-shadow-soft bg-white p-4 transition hover:-translate-x-0.5 hover:-translate-y-0.5"
+            >
+              <p class="sans text-xs font-black uppercase tracking-[0.1em] text-[var(--sakai-terracotta)]">Code Contributors</p>
+              <p class="sans mt-2 text-3xl font-black uppercase text-[var(--sakai-ink)]">1,000+</p>
+              <p class="text-sm text-[var(--sakai-ink-soft)]">Forks</p>
+            </a>
+          </div>
+
           <div class="mt-7 flex flex-wrap gap-4">
             <a
               href={withBase("/sakai-lms-community")}
