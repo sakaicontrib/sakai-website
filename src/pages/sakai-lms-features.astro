@@ -1,128 +1,178 @@
 ---
 import SectionPageLayout from "../layouts/SectionPageLayout.astro";
 
-const highlights = [
+const capabilityGroups = [
   {
-    title: "Communications And Collaboration",
+    title: "Standards And Interoperability",
     description:
-      "Robust communication options and strong support for groups make it easier to keep in touch, learn together, and work in teams."
+      "Sakai is designed for standards-based interoperability across enterprise LMS ecosystems and external tools.",
+    items: [
+      {
+        title: "LTI 1.3 And LTI Advantage",
+        detail:
+          "Sakai supports IMS LTI 1.3 and LTI Advantage workflows, including dynamic registration paths used in modern tool provisioning."
+      },
+      {
+        title: "IMS QTI 1.2 Import And Export",
+        detail:
+          "Tests and question pools support IMS QTI 1.2 import/export paths for interoperable assessment content exchange."
+      },
+      {
+        title: "API-Driven Integrations",
+        detail:
+          "Sakai provides broad API and extension surfaces so institutions can integrate third-party systems and local services."
+      }
+    ]
   },
   {
-    title: "Grading And Assessment",
+    title: "Teaching And Course Delivery",
     description:
-      "State-of-the-art grading and assessment features support high-stakes testing, formative assessment, assignments, rubric scoring, and fast grade entry."
+      "Sakai tools are built for instructional flow, not just content storage, with flexible pathways for different pedagogies.",
+    items: [
+      {
+        title: "Lessons With Conditional Release",
+        detail:
+          "Lessons supports prerequisites, required items, and staged progression so instructors can control sequencing and readiness."
+      },
+      {
+        title: "Group-Aware Learning Paths",
+        detail:
+          "Content and activities can be restricted by group, supporting section-based delivery and differentiated instruction."
+      },
+      {
+        title: "Integrated Teaching Toolset",
+        detail:
+          "Assignments, Tests and Quizzes, Discussions, Resources, and Lessons are coordinated for full-course delivery."
+      }
+    ]
   },
   {
-    title: "Course Development And Delivery",
+    title: "Assessment And Gradebook Depth",
     description:
-      "Create and organize text, resources, quizzes, assignments, links, media, and conditional release flows into coherent course modules."
+      "Sakai supports formative and high-stakes assessment workflows with strong grading controls for complex programs.",
+    items: [
+      {
+        title: "High-Stakes Assessments",
+        detail:
+          "Timed assessment handling includes automatic submission controls, and secure delivery extensions support high-security delivery scenarios."
+      },
+      {
+        title: "Weighted Grades And Category Rules",
+        detail:
+          "Gradebook supports categories and weighting, drop/keep logic, and instructor controls needed for institutional grading policies."
+      },
+      {
+        title: "PDF Export Workflows",
+        detail:
+          "Sakai includes printer-friendly PDF export paths, including individual student grade views and calendar PDF output."
+      }
+    ]
   },
   {
-    title: "Powerful System Administration",
+    title: "Identity, Access, And Enterprise Integration",
     description:
-      "Highly configurable roles and permissions help institutions match local business processes and manage users efficiently."
-  },
-  {
-    title: "Community Contributed Tools",
-    description:
-      "Take advantage of Sakai-specific tools developed by community members and released for use outside the packaged release."
-  },
-  {
-    title: "Integration With External Apps",
-    description:
-      "Sakai leads in IMS LTI implementation and offers an extensive API for deep native integrations with third-party applications."
+      "Sakai can be aligned with institutional identity and directory infrastructure in higher education environments.",
+    items: [
+      {
+        title: "SAML And CAS Authentication",
+        detail:
+          "Sakai includes SAML and CAS login integration paths for institution-managed single sign-on strategies."
+      },
+      {
+        title: "Directory Integration Providers",
+        detail:
+          "Provider modules support enterprise directory patterns including LDAP/UnboundID and Kerberos-based integrations."
+      },
+      {
+        title: "Active Directory And Azure AD Workflows",
+        detail:
+          "Microsoft ecosystem integrations include Azure Active Directory setup patterns, such as Teams-linked meetings workflows."
+      }
+    ]
   }
 ];
 
-const videoTitles = [
-  "Sakai 21 Dark Mode",
-  "Sakai LMS - Product Promo Video",
-  "Conversations Overview",
-  "Sakai 22 Assignments",
-  "Sakai 22 Gradebook",
-  "Sakai 22 Lessons",
-  "Sakai 22 Tests & Quizzes",
-  "Sakai 23 - Features in Development"
+const featureIndexTerms = [
+  "IMS QTI 1.2 support",
+  "LTI 1.3 support",
+  "LTI Advantage",
+  "LTI dynamic registration",
+  "Lessons tool",
+  "Conditional release",
+  "Prerequisites and required items",
+  "Weighted gradebook categories",
+  "High-stakes assessments",
+  "Timed assessment auto-submit",
+  "PDF grade export",
+  "SAML login",
+  "CAS login",
+  "LDAP directory integration",
+  "Kerberos authentication",
+  "Azure AD integration",
+  "Active Directory workflows"
 ];
 
-const learningPillars = [
-  {
-    title: "Meaningful Learning",
-    quote:
-      "Sakai is feature-rich and robust. You can build a truly meaningful learning experience within Sakai that I have not seen in other LMS systems.",
-    attribution: "Julianne Morgan, University of Dayton"
-  },
-  {
-    title: "Faculty And Students First",
-    quote:
-      "Colleges and universities shape the evolution of Sakai. Education, not profit, is the top priority.",
-    attribution: "Alan Regan, Pepperdine University"
-  },
-  {
-    title: "Participatory",
-    quote:
-      "The Sakai community encourages institutions and individuals to influence features, strategy, and development in a tangible way.",
-    attribution: "Dr. Wilma Hodges, Sakai Community Manager"
-  },
-  {
-    title: "Best For Privacy",
-    quote:
-      "Because Sakai is open source, you can maintain control, possession, and ownership of student data over the long term.",
-    attribution: "Dr. Charles Severance, Sakai Founding Architect"
-  }
-];
+const withBase = (path: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
 ---
 
 <SectionPageLayout
-  title="Sakai Features | Sakai LMS"
-  description="Sakai includes exceptional online learning, teaching, and collaboration tools for higher education."
-  kicker="Sakai Features"
-  heading="Check Out Sakai's Best Features"
+  title="Sakai LMS Feature Reference | LTI 1.3, IMS QTI, Lessons, Weighted Grades, SAML"
+  description="Comprehensive Sakai LMS feature reference covering IMS QTI 1.2, LTI 1.3, Lessons conditionals, weighted grades, high-stakes assessment, PDF export, SAML, and AD integration patterns."
+  kicker="Feature Reference"
+  heading="Comprehensive Sakai LMS Feature Reference"
 >
   <article class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
     <p class="text-lg leading-relaxed text-[var(--sakai-ink)]">
-      Sakai includes exceptional online learning, teaching, and collaboration tools built by educators and continuously refined by community institutions.
+      Sakai is a full enterprise LMS with standards-based interoperability, deep teaching workflows, and institution-ready integration options.
+    </p>
+    <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+      This reference highlights capabilities institutions ask about most often when comparing Sakai with Canvas, D2L, and Moodle.
     </p>
   </article>
 
-  <section class="grid gap-4 md:grid-cols-2">
-    {highlights.map((item, index) => (
-      <article class="hard-border block-shadow-soft bg-white p-5">
-        <p class="sans text-xs font-extrabold uppercase tracking-[0.1em] text-[var(--sakai-terracotta)]">0{index + 1}</p>
-        <h2 class="sans mt-2 text-2xl font-black uppercase text-[var(--sakai-ink)]">{item.title}</h2>
-        <p class="mt-3 text-base leading-relaxed text-[var(--sakai-ink-soft)]">{item.description}</p>
+  <section class="grid gap-5">
+    {capabilityGroups.map((group) => (
+      <article class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
+        <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)] md:text-3xl">{group.title}</h2>
+        <p class="mt-3 text-base leading-relaxed text-[var(--sakai-ink-soft)]">{group.description}</p>
+        <div class="mt-4 grid gap-3 md:grid-cols-3">
+          {group.items.map((item) => (
+            <article class="hard-border bg-white p-4">
+              <h3 class="sans text-base font-black uppercase text-[var(--sakai-ink)]">{item.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">{item.detail}</p>
+            </article>
+          ))}
+        </div>
       </article>
     ))}
   </section>
 
   <section class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
-    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Great For Learning</h2>
-    <div class="mt-4 grid gap-4 md:grid-cols-2">
-      {learningPillars.map((item) => (
-        <article class="hard-border bg-white p-4">
-          <p class="sans text-xs font-black uppercase tracking-[0.1em] text-[var(--sakai-terracotta)]">{item.title}</p>
-          <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">"{item.quote}"</p>
-          <p class="mt-3 text-xs font-semibold text-[var(--sakai-ink)]">{item.attribution}</p>
-        </article>
+    <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Capability Index For Evaluation And SEO</h2>
+    <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
+      Frequently searched LMS capability terms mapped to Sakai functionality.
+    </p>
+    <div class="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      {featureIndexTerms.map((term) => (
+        <p class="hard-border bg-white px-3 py-2 text-sm font-medium text-[var(--sakai-ink)]">{term}</p>
       ))}
     </div>
   </section>
 
   <section class="hard-border block-shadow-soft bg-[var(--sakai-ink)] p-6 text-[var(--sakai-paper)]">
-    <h2 class="sans text-2xl font-black uppercase">Sakai Feature Videos</h2>
-    <p class="mt-2 text-sm text-[var(--sakai-paper)]/85">
-      The legacy site includes a dedicated "Sakai Features" channel with walkthrough videos.
+    <h2 class="sans text-2xl font-black uppercase">Implementation Paths</h2>
+    <p class="mt-3 text-sm leading-relaxed text-[var(--sakai-paper)]/90">
+      Start with feature evaluation, then move directly into deployment planning and technical validation.
     </p>
-    <ul class="mt-4 grid gap-2 md:grid-cols-2">
-      {videoTitles.map((title) => (
-        <li class="hard-border bg-[var(--sakai-paper)]/10 px-3 py-2 text-sm">{title}</li>
-      ))}
-    </ul>
-    <a
-      href="https://www.youtube.com/@SakaiCLE"
-      class="sans mt-5 inline-block hard-border bg-[var(--sakai-paper)] px-4 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[var(--sakai-ink)]"
-    >
-      View YouTube Channel
-    </a>
+    <div class="mt-4 grid gap-3 md:grid-cols-4">
+      <a href={withBase("/releases")} class="hard-border bg-[var(--sakai-paper)]/10 p-3 text-sm font-semibold">Release Notes And Branches</a>
+      <a href={withBase("/resources")} class="hard-border bg-[var(--sakai-paper)]/10 p-3 text-sm font-semibold">User Docs And Reference Guides</a>
+      <a href="https://github.com/sakaiproject/sakai" class="hard-border bg-[var(--sakai-paper)]/10 p-3 text-sm font-semibold">Source Code And Architecture</a>
+      <a href={withBase("/try-sakai-lms-free")} class="hard-border bg-[var(--sakai-paper)]/10 p-3 text-sm font-semibold">Optional Sandbox Evaluation</a>
+    </div>
+    <p class="mt-4 text-xs text-[var(--sakai-paper)]/80">
+      Feature availability can vary by release line, local configuration, and institutional deployment choices.
+    </p>
   </section>
 </SectionPageLayout>
