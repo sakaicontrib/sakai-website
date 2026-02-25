@@ -47,17 +47,23 @@ const pmcMembers = [
 const communityStories = [
   {
     name: "Amy Drees",
-    institution: "Northwestern State Community College"
+    institution: "Northwestern State Community College",
+    focus: "Academic support and student success workflows"
   },
   {
     name: "Stella Erbes",
-    institution: "Pepperdine University"
+    institution: "Pepperdine University",
+    focus: "Faculty-centered course design and pedagogy"
   },
   {
     name: "Wilbur Reed",
-    institution: "Johnson University"
+    institution: "Johnson University",
+    focus: "Community implementation and teaching practice"
   }
 ];
+
+const withBase = (path: string) =>
+  `${import.meta.env.BASE_URL.replace(/\/$/, "")}/${path.replace(/^\/+/, "")}`;
 ---
 
 <SectionPageLayout
@@ -125,18 +131,24 @@ const communityStories = [
   <section class="hard-border block-shadow-soft bg-[var(--sakai-paper)] p-6">
     <h2 class="sans text-2xl font-black uppercase text-[var(--sakai-ink)]">Community Stories</h2>
     <p class="mt-2 text-sm leading-relaxed text-[var(--sakai-ink-soft)]">
-      The legacy Sakai site highlights practitioner stories from institutions using Sakai in real teaching environments.
+      Sakai stories document how institutions and practitioners use the platform in real teaching environments, from course design to program delivery.
     </p>
     <div class="mt-4 grid gap-3 md:grid-cols-3">
       {communityStories.map((story) => (
         <article class="hard-border bg-white p-4">
           <h3 class="sans text-lg font-black uppercase text-[var(--sakai-ink)]">{story.name}</h3>
           <p class="mt-2 text-sm text-[var(--sakai-ink-soft)]">{story.institution}</p>
+          <p class="mt-2 text-xs leading-relaxed text-[var(--sakai-ink-soft)]">{story.focus}</p>
         </article>
       ))}
     </div>
-    <a href="https://www.youtube.com/@SakaiCLE" class="sans mt-4 inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
-      Watch Community Videos
-    </a>
+    <div class="mt-4 flex flex-wrap gap-4">
+      <a href={withBase("/sakai-news")} class="sans inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
+        Read Community Stories
+      </a>
+      <a href="https://www.youtube.com/@SakaiCLE" class="sans inline-block text-xs font-bold uppercase tracking-[0.1em] underline">
+        Watch Community Videos
+      </a>
+    </div>
   </section>
 </SectionPageLayout>
