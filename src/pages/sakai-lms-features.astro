@@ -27,7 +27,7 @@ const capabilityGroups = [
   {
     title: "Teaching And Course Delivery",
     description:
-      "Sakai tools are built for instructional flow, not just content storage, with flexible pathways for different pedagogies.",
+      "Sakai tools are built for instructional flow, not just content storage, with flexible pathways for different pedagogies and class operations.",
     items: [
       {
         title: "Lessons With Conditional Release",
@@ -43,6 +43,16 @@ const capabilityGroups = [
         title: "Integrated Teaching Toolset",
         detail:
           "Assignments, Tests and Quizzes, Discussions, Resources, and Lessons are coordinated for full-course delivery."
+      },
+      {
+        title: "Attendance Tool Workflows",
+        detail:
+          "Sakai supports attendance tracking and exports through attendance-enabled tools such as Sign-Up and meeting attendance reports."
+      },
+      {
+        title: "Responsive Design",
+        detail:
+          "Sakai's interface supports responsive desktop and mobile views so teaching and learning workflows remain usable across screen sizes."
       }
     ]
   },
@@ -65,11 +75,26 @@ const capabilityGroups = [
         title: "PDF Export Workflows",
         detail:
           "Sakai includes printer-friendly PDF export paths, including individual student grade views and calendar PDF output."
+      },
+      {
+        title: "Peer-Reviewed Assignments",
+        detail:
+          "Assignments supports structured peer assessment workflows, including review windows, reviewer instructions, scoring, and grade integration."
+      },
+      {
+        title: "Anonymous Grading Options",
+        detail:
+          "Assignment and assessment workflows include anonymous grading options to support fairer, identity-masked evaluation practices."
+      },
+      {
+        title: "Plagiarism Integrations",
+        detail:
+          "Sakai's content-review framework supports plagiarism integrations including Turnitin, TurnitinOC, Urkund, and Compilatio."
       }
     ]
   },
   {
-    title: "Identity, Access, And Enterprise Integration",
+    title: "Identity, Notifications, And Enterprise Integration",
     description:
       "Sakai can be aligned with institutional identity and directory infrastructure in higher education environments.",
     items: [
@@ -87,6 +112,11 @@ const capabilityGroups = [
         title: "Active Directory And Azure AD Workflows",
         detail:
           "Microsoft ecosystem integrations include Azure Active Directory setup patterns, such as Teams-linked meetings workflows."
+      },
+      {
+        title: "Push Notifications To Browser And Device",
+        detail:
+          "Sakai includes push notification support so users can opt in to browser and device notifications for course activity updates."
       }
     ]
   }
@@ -100,7 +130,16 @@ const featureIndexTerms = [
   "Lessons tool",
   "Conditional release",
   "Prerequisites and required items",
+  "Attendance tool",
+  "Responsive design",
+  "Push notifications to device",
   "Weighted gradebook categories",
+  "Peer-reviewed assignments",
+  "Anonymous grading",
+  "Plagiarism integrations",
+  "Turnitin integration",
+  "Urkund integration",
+  "Compilatio integration",
   "High-stakes assessments",
   "Timed assessment auto-submit",
   "PDF grade export",
@@ -117,8 +156,8 @@ const withBase = (path: string) =>
 ---
 
 <SectionPageLayout
-  title="Sakai LMS Feature Reference | LTI 1.3, IMS QTI, Lessons, Weighted Grades, SAML"
-  description="Comprehensive Sakai LMS feature reference covering IMS QTI 1.2, LTI 1.3, Lessons conditionals, weighted grades, high-stakes assessment, PDF export, SAML, and AD integration patterns."
+  title="Sakai LMS Feature Reference | LTI 1.3, QTI 1.2, Peer Review, Anonymous Grading, Plagiarism Integrations"
+  description="Comprehensive Sakai LMS feature reference covering IMS QTI 1.2, LTI 1.3, Lessons conditionals, attendance, peer-reviewed assignments, anonymous grading, plagiarism integrations, push notifications, weighted grades, PDF export, and enterprise authentication."
   kicker="Feature Reference"
   heading="Comprehensive Sakai LMS Feature Reference"
 >

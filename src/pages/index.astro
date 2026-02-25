@@ -36,14 +36,14 @@ const features = [
       "Tests and question pools support IMS QTI 1.2 import and export flows for interoperable assessment content."
   },
   {
-    title: "Lessons And Conditional Release",
+    title: "Responsive UX, Attendance, And Notifications",
     description:
-      "Lessons supports prerequisites, required items, and group-aware restrictions so instructors can release content in intentional learning sequences."
+      "Sakai supports responsive design across desktop and mobile views, includes attendance workflows, and can deliver push notifications to browsers and devices."
   },
   {
-    title: "Weighted Grades And High-Stakes Assessment",
+    title: "Assessment Integrity, Peer Review, And Anonymous Grading",
     description:
-      "Gradebook includes weighted categories and PDF export workflows, while timed and secure assessment delivery supports high-stakes evaluation."
+      "Assignments and assessment tools support peer review, anonymous grading options, weighted grades, plagiarism integrations, and PDF export workflows."
   }
 ];
 
@@ -220,7 +220,15 @@ const withBase = (path: string) =>
           <h2 class="sans text-4xl leading-none font-black uppercase text-[var(--sakai-ink)] md:text-6xl">
             Sakai Capability Reference
           </h2>
-          <span class="ribbon sans text-xs uppercase tracking-[0.12em] md:text-sm">No Vendor Lock-In</span>
+          <div class="flex flex-wrap items-center gap-3">
+            <a
+              href={withBase("/sakai-lms-features")}
+              class="sans hard-border block-shadow-soft bg-white px-3 py-2 text-xs font-bold uppercase tracking-[0.1em] text-[var(--sakai-ink)] transition hover:-translate-x-0.5 hover:-translate-y-0.5"
+            >
+              View Full Feature Reference
+            </a>
+            <span class="ribbon sans text-xs uppercase tracking-[0.12em] md:text-sm">No Vendor Lock-In</span>
+          </div>
         </div>
 
         <div class="grid gap-4 md:grid-cols-2">
